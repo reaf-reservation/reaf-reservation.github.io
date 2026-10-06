@@ -6,6 +6,10 @@
   <title>Re:af 予約システム</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -14,148 +18,716 @@
     }
 
     .container {
-      max-width: 420px;
+      max-width: 430px;
       margin: 0 auto;
-      padding: 40px 20px;
+      min-height: 100vh;
+      padding: 24px 18px 40px;
+    }
+
+    h1, h2, h3 {
+      color: #5b8f6a;
       text-align: center;
     }
 
-    h1 {
-      color: #5b8f6a;
-      margin-bottom: 40px;
-    }
-
-    h2 {
-      color: #5b8f6a;
-      margin-bottom: 30px;
+    .hidden {
+      display: none;
     }
 
     .menu-button {
       display: block;
       width: 100%;
       padding: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       border: none;
-      border-radius: 15px;
+      border-radius: 14px;
       background-color: white;
-      font-size: 18px;
+      font-size: 17px;
       cursor: pointer;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    }
-
-    .menu-button:hover {
-      background-color: #eef7f0;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
 
     .course-area {
       display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-bottom: 30px;
+      gap: 8px;
+      margin-bottom: 20px;
     }
 
     .course-button {
       flex: 1;
-      padding: 18px 10px;
-      border: 2px solid #9abda2;
-      border-radius: 12px;
+      padding: 14px 5px;
+      border: 2px solid #a8c8af;
+      border-radius: 10px;
       background-color: white;
       color: #4f7f5b;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .course-button.selected {
+      background-color: #5b8f6a;
+      color: white;
+    }
+
+    .price {
+      font-size: 12px;
+      margin-top: 4px;
+      display: block;
+    }
+
+    .date-title {
+      font-weight: bold;
+      margin-top: 22px;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .time-button {
+      padding: 13px 4px;
+      border: 1px solid #c8c0b4;
+      border-radius: 9px;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .time-button.full {
+      background-color: #e8e3da;
+      color: #999;
+      text-decoration: line-through;
+      cursor: not-allowed;
+    }
+
+    .step-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-bottom: 24px;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .step {
+      text-align: center;
+      padding: 10px 3px;
+      font-size: 11px;
+      color: #aaa;
+      border-right: 1px solid #eee;
+    }
+
+    .step:last-child {
+      border-right: none;
+    }
+
+    .step.active {
+      color: #4f7f5b;
+      font-weight: bold;
+      background-color: #eef7f0;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label.title {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 9px;
+      font-size: 16px;
+      background-color: white;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .reservation-info {
+      background-color: #eef7f0;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 18px;
+      line-height: 1.7;
+    }
+
+    .choice-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .choice-button {
+      flex: 1;
+      padding: 14px 5px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .choice-button.selected {
+      background-color: #5b8f6a;
+      color: white;
+    }
+
+    .service-choice {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid #a8c8af;
+      border-radius: 10px;
+      background-color: white;
+      text-align: left;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .service-choice.selected {
+      background-color: #eef7f0;
+      border: 2px solid #5b8f6a;
+    }
+
+    .service-sub {
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+      color: #777;
+    }
+
+    .parts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+    }
+
+    .part-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 9px;
+    }
+
+    .next-button {
+      width: 100%;
+      padding: 16px;
+      margin-top: 22px;
+      border: none;
+      border-radius: 10px;
+      background-color: #5b8f6a;
+      color: white;
       font-size: 16px;
       cursor: pointer;
     }
 
-    .course-button:hover {
-      background-color: #eef7f0;
-    }
-
     .back-button {
-      border: none;
-      background: none;
+      display: block;
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      background-color: transparent;
+      border: 1px solid #a8c8af;
+      border-radius: 10px;
       color: #5b8f6a;
-      text-decoration: underline;
       cursor: pointer;
-      font-size: 15px;
     }
 
-    .hidden {
-      display: none;
+    .info-box {
+      background-color: #eef7f0;
+      border-left: 4px solid #5b8f6a;
+      padding: 12px;
+      margin-bottom: 18px;
+      font-size: 13px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <!-- 最初の画面 -->
-    <div id="homeScreen">
+  <!-- 0 最初 -->
+  <div id="homeScreen">
+    <h1>🌿 Re:af</h1>
 
-      <h1>🌿 Re:af</h1>
+    <button class="menu-button" onclick="showSchedule()">
+      📅 新しいご予約
+    </button>
 
-      <button class="menu-button" onclick="showCourseScreen()">
-        📅 新しいご予約
+    <button class="menu-button">
+      🔍 ご予約の確認・キャンセル
+    </button>
+  </div>
+
+
+  <!-- 予約時間 -->
+  <div id="scheduleScreen" class="hidden">
+
+    <h2>🌿 Re:af｜空き状況</h2>
+    <p>ご希望のコースと時間を選択してください</p>
+
+    <div class="course-area">
+      <button class="course-button" onclick="selectDuration(60,3000,this)">
+        <strong>60分</strong>
+        <span class="price">¥3,000</span>
       </button>
 
-      <button class="menu-button">
-        🔍 ご予約の確認・キャンセル
+      <button class="course-button" onclick="selectDuration(90,4500,this)">
+        <strong>90分</strong>
+        <span class="price">¥4,500</span>
       </button>
 
+      <button class="course-button" onclick="selectDuration(120,6000,this)">
+        <strong>120分</strong>
+        <span class="price">¥6,000</span>
+      </button>
     </div>
 
+    <div id="scheduleArea" class="hidden">
 
-    <!-- コース選択画面 -->
-    <div id="courseScreen" class="hidden">
+      <div class="date-title">10/7（水）</div>
 
-      <h2>🌿 Re:af｜空き状況</h2>
-
-      <p>ご希望のコースを選択してください</p>
-
-      <div class="course-area">
-
-        <button class="course-button" onclick="selectCourse(60)">
-          60分
-        </button>
-
-        <button class="course-button" onclick="selectCourse(90)">
-          90分
-        </button>
-
-        <button class="course-button" onclick="selectCourse(120)">
-          120分
-        </button>
-
+      <div class="time-grid">
+        <button class="time-button" onclick="selectTime('10/7','10:00')">10:00</button>
+        <button class="time-button" onclick="selectTime('10/7','10:30')">10:30</button>
+        <button class="time-button full">11:00</button>
+        <button class="time-button" onclick="selectTime('10/7','11:30')">11:30</button>
+        <button class="time-button" onclick="selectTime('10/7','12:00')">12:00</button>
+        <button class="time-button" onclick="selectTime('10/7','12:30')">12:30</button>
+        <button class="time-button" onclick="selectTime('10/7','13:00')">13:00</button>
+        <button class="time-button" onclick="selectTime('10/7','13:30')">13:30</button>
+        <button class="time-button" onclick="selectTime('10/7','14:00')">14:00</button>
       </div>
 
-      <p id="selectedCourse"></p>
+      <div class="date-title">10/8（木）</div>
 
-      <button class="back-button" onclick="showHomeScreen()">
-        ← 最初の画面に戻る
-      </button>
-
+      <div class="time-grid">
+        <button class="time-button" onclick="selectTime('10/8','10:00')">10:00</button>
+        <button class="time-button full">10:30</button>
+        <button class="time-button" onclick="selectTime('10/8','11:00')">11:00</button>
+        <button class="time-button" onclick="selectTime('10/8','11:30')">11:30</button>
+        <button class="time-button" onclick="selectTime('10/8','12:00')">12:00</button>
+        <button class="time-button" onclick="selectTime('10/8','12:30')">12:30</button>
+        <button class="time-button full">13:00</button>
+        <button class="time-button" onclick="selectTime('10/8','13:30')">13:30</button>
+        <button class="time-button" onclick="selectTime('10/8','14:00')">14:00</button>
+      </div>
     </div>
+
+    <button class="back-button" onclick="goHome()">← 戻る</button>
 
   </div>
 
 
-  <script>
+  <!-- 1 お客様情報 -->
+  <div id="customerScreen" class="hidden">
 
-    function showCourseScreen() {
-      document.getElementById("homeScreen").classList.add("hidden");
-      document.getElementById("courseScreen").classList.remove("hidden");
+    <h2>🌿 Re:af｜ご予約</h2>
+
+    <div class="step-bar">
+      <div class="step active">1<br>お客様情報</div>
+      <div class="step">2<br>コース選択</div>
+      <div class="step">3<br>部位選択</div>
+      <div class="step">4<br>確認・送信</div>
+    </div>
+
+    <h3>📋 お客様情報</h3>
+
+    <div class="form-group">
+      <label class="title">お名前 ※必須</label>
+      <input id="customerName" type="text" placeholder="例：山田 花子">
+    </div>
+
+    <div class="form-group">
+      <label class="title">電話番号 ※必須</label>
+      <input id="customerPhone" type="tel" placeholder="例：090-0000-0000">
+    </div>
+
+    <div class="reservation-info" id="reservationInfo"></div>
+
+    <div class="form-group">
+      <label class="title">初回・リピート ※必須</label>
+
+      <div class="choice-row">
+        <button class="choice-button" onclick="selectVisit('初回',this)">
+          🌱 初回
+        </button>
+
+        <button class="choice-button" onclick="selectVisit('リピート',this)">
+          🔁 リピート
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="title">メモ・症状（任意）</label>
+      <textarea id="customerNote"
+        placeholder="気になる症状・要望などがあればご記入ください"></textarea>
+    </div>
+
+    <button class="next-button" onclick="goService()">
+      次へ：コース選択 →
+    </button>
+
+    <button class="back-button" onclick="backSchedule()">
+      ← 戻る
+    </button>
+
+  </div>
+
+
+  <!-- 2 施術コース -->
+  <div id="serviceScreen" class="hidden">
+
+    <h2>🌿 Re:af｜ご予約</h2>
+
+    <div class="step-bar">
+      <div class="step">1<br>お客様情報</div>
+      <div class="step active">2<br>コース選択</div>
+      <div class="step">3<br>部位選択</div>
+      <div class="step">4<br>確認・送信</div>
+    </div>
+
+    <h3>💆 コース選択</h3>
+
+    <p>ご希望のコースをお選びください</p>
+
+    <button class="service-choice"
+      onclick="selectService('揉みほぐしのみ',this)">
+      🤲 <strong>揉みほぐしのみ</strong>
+      <span class="service-sub">
+        気になる部位をほぐします
+      </span>
+    </button>
+
+    <button class="service-choice"
+      onclick="selectService('ストレッチのみ',this)">
+      🧘 <strong>ストレッチのみ</strong>
+      <span class="service-sub">
+        身体の柔軟性を高めます
+      </span>
+    </button>
+
+    <button class="service-choice"
+      onclick="selectService('両方',this)">
+      ✨ <strong>両方（揉みほぐし＋ストレッチ）</strong>
+      <span class="service-sub">
+        ほぐし＋ストレッチのおすすめコース
+      </span>
+    </button>
+
+    <button class="next-button" onclick="goParts()">
+      次へ：部位選択 →
+    </button>
+
+    <button class="back-button" onclick="backCustomer()">
+      ← 戻る
+    </button>
+
+  </div>
+
+
+  <!-- 3 部位選択 -->
+  <div id="partsScreen" class="hidden">
+
+    <h2>🌿 Re:af｜ご予約</h2>
+
+    <div class="step-bar">
+      <div class="step">1<br>お客様情報</div>
+      <div class="step">2<br>コース選択</div>
+      <div class="step active">3<br>部位選択</div>
+      <div class="step">4<br>確認・送信</div>
+    </div>
+
+    <h3>📍 揉みほぐし 部位選択</h3>
+
+    <div class="info-box">
+      🤲 揉みほぐしは基本的に全身を行います。<br>
+      特にお疲れの箇所を選択してください。
+    </div>
+
+    <p><strong>揉みほぐし部位（複数選択OK）</strong></p>
+
+    <div class="parts-grid">
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="頭">
+        頭
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="首">
+        首
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="鎖骨周り">
+        鎖骨周り
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="肩">
+        肩
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="腕">
+        腕
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="手">
+        手
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="背中">
+        背中
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="肩甲骨">
+        肩甲骨
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="腰">
+        腰
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="臀部">
+        臀部
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="裏もも">
+        裏もも
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="ふくらはぎ">
+        ふくらはぎ
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="前もも">
+        前もも
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="スネ">
+        スネ
+      </label>
+
+      <label class="part-item">
+        <input type="checkbox" name="part" value="足">
+        足
+      </label>
+
+    </div>
+
+    <button class="next-button" onclick="finishToday()">
+      次へ：確認・送信 →
+    </button>
+
+    <button class="back-button" onclick="backService()">
+      ← 戻る
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  let selectedDuration = null;
+  let selectedPrice = null;
+  let selectedDate = null;
+  let selectedTime = null;
+  let selectedVisit = null;
+  let selectedService = null;
+
+
+  function hideAll() {
+    document.querySelectorAll(
+      "#homeScreen,#scheduleScreen,#customerScreen,#serviceScreen,#partsScreen"
+    ).forEach(screen => {
+      screen.classList.add("hidden");
+    });
+  }
+
+
+  function showSchedule() {
+    hideAll();
+    document.getElementById("scheduleScreen").classList.remove("hidden");
+  }
+
+
+  function goHome() {
+    hideAll();
+    document.getElementById("homeScreen").classList.remove("hidden");
+  }
+
+
+  function selectDuration(minutes, price, button) {
+
+    selectedDuration = minutes;
+    selectedPrice = price;
+
+    document.querySelectorAll(".course-button")
+      .forEach(btn => btn.classList.remove("selected"));
+
+    button.classList.add("selected");
+
+    document.getElementById("scheduleArea")
+      .classList.remove("hidden");
+  }
+
+
+  function selectTime(date, time) {
+
+    if (!selectedDuration) {
+      alert("先に60分・90分・120分のコースを選択してください");
+      return;
     }
 
-    function showHomeScreen() {
-      document.getElementById("courseScreen").classList.add("hidden");
-      document.getElementById("homeScreen").classList.remove("hidden");
+    selectedDate = date;
+    selectedTime = time;
+
+    hideAll();
+
+    document.getElementById("customerScreen")
+      .classList.remove("hidden");
+
+    document.getElementById("reservationInfo").innerHTML =
+      "<strong>ご予約日時</strong><br>" +
+      selectedDate + "　" + selectedTime + "〜<br>" +
+      selectedDuration + "分コース　¥" +
+      selectedPrice.toLocaleString();
+  }
+
+
+  function selectVisit(value, button) {
+
+    selectedVisit = value;
+
+    document.querySelectorAll(".choice-button")
+      .forEach(btn => btn.classList.remove("selected"));
+
+    button.classList.add("selected");
+  }
+
+
+  function goService() {
+
+    const name =
+      document.getElementById("customerName").value.trim();
+
+    const phone =
+      document.getElementById("customerPhone").value.trim();
+
+    if (name === "") {
+      alert("お名前を入力してください");
+      return;
     }
 
-    function selectCourse(minutes) {
-      document.getElementById("selectedCourse").textContent =
-        minutes + "分コースが選択されました";
+    if (phone === "") {
+      alert("電話番号を入力してください");
+      return;
     }
 
-  </script>
+    if (!selectedVisit) {
+      alert("初回またはリピートを選択してください");
+      return;
+    }
+
+    hideAll();
+
+    document.getElementById("serviceScreen")
+      .classList.remove("hidden");
+  }
+
+
+  function selectService(value, button) {
+
+    selectedService = value;
+
+    document.querySelectorAll(".service-choice")
+      .forEach(btn => btn.classList.remove("selected"));
+
+    button.classList.add("selected");
+  }
+
+
+  function goParts() {
+
+    if (!selectedService) {
+      alert("施術コースを選択してください");
+      return;
+    }
+
+    hideAll();
+
+    document.getElementById("partsScreen")
+      .classList.remove("hidden");
+  }
+
+
+  function backSchedule() {
+    hideAll();
+    document.getElementById("scheduleScreen").classList.remove("hidden");
+  }
+
+
+  function backCustomer() {
+    hideAll();
+    document.getElementById("customerScreen").classList.remove("hidden");
+  }
+
+
+  function backService() {
+    hideAll();
+    document.getElementById("serviceScreen").classList.remove("hidden");
+  }
+
+
+  function finishToday() {
+
+    const parts =
+      [...document.querySelectorAll('input[name="part"]:checked')]
+      .map(item => item.value);
+
+    if (parts.length === 0) {
+      alert("特に気になる部位を1つ以上選択してください");
+      return;
+    }
+
+    alert(
+      "今日はここまで完成です！\n\n" +
+      "選択した部位：\n" +
+      parts.join("・")
+    );
+  }
+
+</script>
 
 </body>
 </html>
