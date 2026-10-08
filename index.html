@@ -3458,6 +3458,8 @@ function loadTherapists() {
   const status = document.getElementById("therapistLoadStatus");
   const retry = document.getElementById("therapistRetry");
   const previous = select.value;
+  ++availabilityRequestId;
+  verifiedSlotTimes.clear();
   const requestNumber = ++therapistRequestNumber;
   const callbackName = "reafTherapists_" + requestNumber + "_" + Date.now();
 
@@ -3484,15 +3486,21 @@ function loadTherapists() {
     const valid = data && data.result === "success" && Array.isArray(data.therapists);
     if (!valid) {
       activeTherapistNames = [];
+      activeTherapistIdsByName = {};
       select.replaceChildren(new Option("担当者の取得に失敗しました", ""));
       status.textContent = "担当者一覧を取得できませんでした。再読み込みしてください。";
       retry.classList.remove("hidden");
       return;
     }
 
-    activeTherapistNames = [...new Set(data.therapists
-      .filter(item => item && typeof item.name === "string" && item.name.trim())
-      .map(item => item.name.trim()))];
+    const availablePeople = data.therapists.filter(item =>
+      item && typeof item.name === "string" && item.name.trim() &&
+      typeof item.id === "string" && item.id.trim()
+    );
+    activeTherapistNames = [...new Set(availablePeople.map(item => item.name.trim()))];
+    activeTherapistIdsByName = Object.fromEntries(
+      availablePeople.map(item => [item.name.trim(), item.id.trim()])
+    );
 
     select.replaceChildren(new Option("担当者を選択してください", ""));
     select.add(new Option("指名なし", "指名なし"));
@@ -4314,293 +4322,122 @@ function formatDateInput(date) {
 
 
 
+// Googleカレンダーの最新状況を取得します（JSONP）。
+let availabilityRequestId = 0;
+let verifiedSlotTimes = new Set();
+let activeTherapistIdsByName = {};
+
 function updateSchedule() {
-
-
-
-  const therapist =
-
-    document
-
-      .getElementById(
-
-        "therapistSelect"
-
-      )
-
-      .value;
-
-
-
-
-
-  if (
-
-    !selectedMinutes ||
-
-    !selectedDate ||
-
-    !therapist
-
-  ) {
-
-
-
-    document
-
-      .getElementById(
-
-        "timeArea"
-
-      )
-
-      .classList
-
-      .add("hidden");
-
-
-
+  const therapist = document.getElementById("therapistSelect").value;
+  selectedTime = null;
+  verifiedSlotTimes.clear();
+  const requestId = ++availabilityRequestId;
+  if (!selectedMinutes || !selectedDate || !therapist) {
+    document.getElementById("timeArea").classList.add("hidden");
     return;
-
-
-
   }
 
-
-
-
-
-  selectedTherapist =
-
-    therapist;
-
-
-
-  createTimeSlots();
-
-
-
-}
-
-
-
-
-
-function createTimeSlots() {
-
-
-
-  const date =
-
-    new Date(
-
-      selectedDate +
-
-      "T00:00:00"
-
-    );
-
-
-
-
-
-  document
-
-    .getElementById(
-
-      "timeTitle"
-
-    )
-
-    .textContent =
-
-    displayDate(date) +
-
-    "｜" +
-
-    selectedTherapist;
-
-
-
-
-
-  const grid =
-
-    document
-
-      .getElementById(
-
-        "timeGrid"
-
-      );
-
-
-
-  grid.innerHTML = "";
-
-
-
-
-
-  const times = [];
-
-
-
-  for (
-
-    let hour = 10;
-
-    hour <= 17;
-
-    hour++
-
-  ) {
-
-
-
-    times.push(
-
-      String(hour).padStart(2,"0") +
-
-      ":00"
-
-    );
-
-
-
-    times.push(
-
-      String(hour).padStart(2,"0") +
-
-      ":30"
-
-    );
-
-
-
+  selectedTherapist = therapist;
+  const therapistId = therapist === "指名なし"
+    ? "指名なし" : activeTherapistIdsByName[therapist];
+  const area = document.getElementById("timeArea");
+  const grid = document.getElementById("timeGrid");
+  area.classList.remove("hidden");
+  document.getElementById("timeTitle").textContent =
+    displayDate(new Date(selectedDate + "T00:00:00")) + "｜" + therapist;
+  grid.replaceChildren();
+
+  const message = document.createElement("div");
+  message.className = "loading";
+  message.textContent = "Googleカレンダーの空き状況を確認しています...";
+  grid.appendChild(message);
+
+  if (!therapistId) {
+    message.textContent = "担当者の情報を取得できません。もう一度選択してください。";
+    return;
   }
 
-
-
-
-
-  times.forEach(
-
-    (time,index) => {
-
-
-
-      const button =
-
-        document
-
-          .createElement(
-
-            "button"
-
-          );
-
-
-
-      button.className =
-
-        "time-btn";
-
-
-
-      button.textContent =
-
-        time;
-
-
-
-
-
-      const demoFull =
-
-        [2,5,9]
-
-        .includes(index);
-
-
-
-
-
-      if (demoFull) {
-
-
-
-        button.classList.add(
-
-          "full"
-
-        );
-
-
-
-        button.disabled =
-
-          true;
-
-
-
-      }
-
-
-
-      else {
-
-
-
-        button.onclick =
-
-          () => selectTime(time);
-
-
-
-      }
-
-
-
-
-
-      grid.appendChild(
-
-        button
-
-      );
-
-
-
+  const callbackName = "reafAvailable_" + requestId + "_" + Date.now();
+  const script = document.createElement("script");
+  let completed = false;
+  const timeout = setTimeout(() => finish(null), 15000);
+
+  function finish(data) {
+    if (completed) return;
+    completed = true;
+    clearTimeout(timeout);
+    delete window[callbackName];
+    script.remove();
+    // 日付・コース・担当者が途中で変わった場合は古い結果を捨てる
+    if (requestId !== availabilityRequestId) return;
+    if (!data || data.result !== "success" || !Array.isArray(data.slots) ||
+        data.date !== selectedDate || Number(data.minutes) !== Number(selectedMinutes) ||
+        data.therapistId !== therapistId) {
+      grid.replaceChildren();
+      const error = document.createElement("div");
+      error.className = "loading";
+      error.textContent = "空き状況を取得できませんでした。下のボタンで再試行してください。";
+      grid.appendChild(error);
+      const retry = document.createElement("button");
+      retry.className = "back-btn";
+      retry.textContent = "↻ 空き状況を再読み込み";
+      retry.onclick = updateSchedule;
+      grid.appendChild(retry);
+      return;
     }
 
-  );
-
-
-
-
-
-  document
-
-    .getElementById(
-
-      "timeArea"
-
-    )
-
-    .classList
-
-    .remove("hidden");
-
-
-
+    grid.replaceChildren();
+    const validTimes = new Set();
+    for (let hour = 10; hour <= 17; hour++) {
+      for (const suffix of [":00", ":30"]) {
+        validTimes.add(String(hour).padStart(2,"0") + suffix);
+      }
+    }
+    const received = new Map(data.slots
+      .filter(slot => slot && validTimes.has(slot.time))
+      .map(slot => [slot.time, slot]));
+    if (received.size !== validTimes.size) {
+      const incomplete = document.createElement("div");
+      incomplete.className = "loading";
+      incomplete.textContent = "空き状況の情報が不完全です。再読み込みしてください。";
+      grid.appendChild(incomplete);
+      return;
+    }
+    verifiedSlotTimes = new Set();
+    for (const time of validTimes) {
+      const slot = received.get(time);
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "time-btn";
+      button.textContent = time;
+      if (slot.available === true) {
+        verifiedSlotTimes.add(time);
+        button.onclick = () => selectTime(time);
+      } else {
+        button.disabled = true;
+        button.classList.add("full");
+        button.title = "予約不可";
+      }
+      grid.appendChild(button);
+    }
+  }
+  window[callbackName] = finish;
+  script.onerror = () => finish(null);
+  script.src = GAS_URL + "?action=availability" +
+    "&date=" + encodeURIComponent(selectedDate) +
+    "&minutes=" + encodeURIComponent(selectedMinutes) +
+    "&therapistId=" + encodeURIComponent(therapistId) +
+    "&callback=" + encodeURIComponent(callbackName) +
+    "&_=" + Date.now();
+  document.head.appendChild(script);
 }
 
-
-
-
-
 function selectTime(time) {
+  if (!verifiedSlotTimes.has(time)) {
+    alert("空き状況を再確認してください。");
+    return;
+  }
+
 
 
 
