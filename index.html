@@ -1,3835 +1,7683 @@
 <!DOCTYPE html>
+
 <html lang="ja">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Re:af ご予約</title>
 
+
+
 <style>
+
 * {
+
   box-sizing: border-box;
+
 }
+
+
 
 body {
+
   margin: 0;
+
   background: #f4f1ea;
+
   color: #333;
+
   font-family:
+
     -apple-system,
+
     BlinkMacSystemFont,
+
     "Segoe UI",
+
     "Hiragino Kaku Gothic ProN",
+
     "Yu Gothic",
+
     sans-serif;
+
 }
+
+
 
 button,
+
 input,
+
 select,
+
 textarea {
+
   font: inherit;
+
 }
+
+
 
 button {
+
   cursor: pointer;
+
 }
+
+
 
 .app {
+
   width: 100%;
+
   max-width: 430px;
+
   min-height: 100vh;
+
   margin: 0 auto;
+
   background: #faf8f3;
+
 }
+
+
 
 .hidden {
+
   display: none !important;
+
 }
+
+
 
 .header {
+
   background: #5c9470;
+
   color: white;
+
   text-align: center;
+
   padding: 15px 12px;
+
 }
+
+
 
 .header-title {
+
   font-size: 20px;
+
   font-weight: bold;
+
 }
+
+
 
 .header-sub {
+
   margin-top: 4px;
+
   font-size: 11px;
+
 }
+
+
 
 .content {
+
   padding: 20px 13px 35px;
+
 }
+
+
 
 .logo {
+
   margin: 30px 0;
+
   text-align: center;
+
   color: #5c9470;
+
   font-size: 25px;
+
   font-weight: bold;
+
 }
+
+
 
 .home-card {
+
   width: 100%;
+
   margin-bottom: 13px;
+
   padding: 20px 18px;
+
   border: none;
+
   border-radius: 14px;
+
   background: white;
+
   box-shadow: 0 3px 12px rgba(0,0,0,.07);
+
   text-align: left;
+
 }
+
+
 
 .home-card-title {
+
   font-size: 16px;
+
   font-weight: bold;
+
 }
+
+
 
 .home-card-sub {
+
   margin-top: 5px;
+
   color: #888;
+
   font-size: 11px;
+
 }
+
+
 
 .course-grid {
+
   display: grid;
+
   grid-template-columns: repeat(3,1fr);
+
   gap: 7px;
+
 }
+
+
 
 .course-time-btn {
+
   padding: 13px 4px;
+
   border: 1px solid #9cc3a5;
+
   border-radius: 9px;
+
   background: white;
+
   color: #467858;
+
 }
+
+
 
 .course-time-btn strong {
+
   display: block;
+
 }
+
+
 
 .course-time-btn span {
+
   color: #777;
+
   font-size: 11px;
+
 }
+
+
 
 .course-time-btn.selected {
+
   border: 2px solid #4f8862;
+
   background: #edf7ef;
+
 }
+
+
 
 .info-box {
+
   margin: 15px 0;
+
   padding: 11px;
+
   border-left: 4px solid #5c9470;
+
   background: #edf7ef;
+
   font-size: 11px;
+
   line-height: 1.7;
+
 }
+
+
 
 .field-block {
+
   margin-top: 17px;
+
 }
+
+
 
 .field-label {
+
   display: block;
+
   margin-bottom: 6px;
+
   font-size: 13px;
+
   font-weight: bold;
+
 }
+
+
 
 .input {
+
   width: 100%;
+
   padding: 13px;
+
   border: 1px solid #d1cbc1;
+
   border-radius: 9px;
+
   background: white;
+
   font-size: 16px;
+
 }
+
+
 
 textarea.input {
+
   min-height: 90px;
+
   resize: vertical;
+
 }
+
+
 
 .primary-btn {
+
   width: 100%;
+
   margin-top: 18px;
+
   padding: 15px;
+
   border: none;
+
   border-radius: 8px;
+
   background: #5c9470;
+
   color: white;
+
   font-weight: bold;
+
 }
+
+
 
 .primary-btn:disabled {
+
   background: #c8c1b6;
+
   cursor: not-allowed;
+
 }
+
+
 
 .back-btn {
+
   width: 100%;
+
   margin-top: 9px;
+
   padding: 13px;
+
   border: 1px solid #a8c9b0;
+
   border-radius: 8px;
+
   background: transparent;
+
   color: #578766;
+
 }
+
+
 
 .time-title {
+
   margin: 22px 0 10px;
+
   font-weight: bold;
+
 }
+
+
 
 .time-grid {
+
   display: grid;
+
   grid-template-columns: repeat(3,1fr);
+
   gap: 8px;
+
 }
+
+
 
 .time-btn {
+
   padding: 13px 4px;
+
   border: 1px solid #c9c2b8;
+
   border-radius: 8px;
+
   background: white;
+
 }
+
+
 
 .time-btn.full {
+
   background: #e8e3da;
+
   color: #aaa;
+
   text-decoration: line-through;
+
   cursor: not-allowed;
+
 }
+
+
 
 .steps {
+
   display: grid;
+
   grid-template-columns: repeat(4,1fr);
+
   background: white;
+
   border-bottom: 1px solid #ddd;
+
 }
+
+
 
 .step {
+
   padding: 8px 2px;
+
   border-right: 1px solid #eee;
+
   color: #aaa;
+
   text-align: center;
+
   font-size: 9px;
+
 }
+
+
 
 .step:last-child {
+
   border-right: none;
+
 }
+
+
 
 .step-circle {
+
   width: 19px;
+
   height: 19px;
+
   margin: 0 auto 3px;
+
   border-radius: 50%;
+
   background: #ddd;
+
   color: white;
+
   line-height: 19px;
+
 }
+
+
 
 .step.active {
+
   color: #4c805c;
+
   font-weight: bold;
+
 }
+
+
 
 .step.active .step-circle {
+
   background: #5c9470;
+
 }
+
+
 
 .section-title {
+
   margin: 3px 0 14px;
+
   padding-bottom: 7px;
+
   border-bottom: 1px solid #b9d5c1;
+
   color: #4f805d;
+
   font-size: 16px;
+
   font-weight: bold;
+
 }
+
+
 
 .required {
+
   color: #c85d5d;
+
   font-size: 10px;
+
 }
+
+
 
 .reservation-card {
+
   margin: 17px 0;
+
   padding: 12px;
+
   border: 1px solid #c4dfcb;
+
   border-radius: 9px;
+
   background: #edf8f0;
+
 }
+
+
 
 .reservation-date {
+
   margin: 5px 0;
+
   color: #3d6f4d;
+
   font-size: 17px;
+
   font-weight: bold;
+
 }
+
+
 
 .reservation-detail {
+
   color: #666;
+
   font-size: 11px;
+
 }
+
+
 
 .change-link {
+
   margin-top: 8px;
+
   color: #5d8969;
+
   font-size: 11px;
+
   text-decoration: underline;
+
   cursor: pointer;
+
 }
+
+
 
 .choice-two {
+
   display: grid;
+
   grid-template-columns: repeat(2,1fr);
+
   gap: 8px;
+
 }
+
+
 
 .choice-btn {
+
   padding: 13px 6px;
+
   border: 1px solid #cfc8bd;
+
   border-radius: 8px;
+
   background: white;
+
 }
+
+
 
 .choice-btn.selected {
+
   border: 2px solid #5c9470;
+
   background: #edf8f0;
+
 }
+
+
 
 .service-btn {
+
   width: 100%;
+
   margin-bottom: 10px;
+
   padding: 15px;
+
   border: 1px solid #a8c9b0;
+
   border-radius: 9px;
+
   background: white;
+
   text-align: left;
+
 }
+
+
 
 .service-btn strong {
+
   color: #477a58;
+
 }
+
+
 
 .service-btn span {
+
   display: block;
+
   margin-top: 4px;
+
   color: #777;
+
   font-size: 10px;
+
 }
+
+
 
 .service-btn.selected {
+
   border: 2px solid #5c9470;
+
   background: #edf8f0;
+
 }
+
+
 
 .parts-grid {
+
   display: grid;
+
   grid-template-columns: repeat(2,1fr);
+
   gap: 8px;
+
 }
+
+
 
 .part-item {
+
   display: flex;
+
   align-items: center;
+
   gap: 7px;
+
   padding: 12px;
+
   border: 1px solid #d0c9be;
+
   border-radius: 8px;
+
   background: white;
+
   font-size: 12px;
+
 }
+
+
 
 .part-item input {
+
   width: 17px;
+
   height: 17px;
+
 }
+
+
 
 .stretch-mode-grid {
+
   display: grid;
+
   grid-template-columns: repeat(2,1fr);
+
   gap: 8px;
+
   margin-bottom: 15px;
+
 }
+
+
 
 .stretch-mode {
+
   padding: 18px 7px;
+
   border: 1px solid #9fc5a8;
+
   border-radius: 8px;
+
   background: white;
+
   color: #467858;
+
   font-weight: bold;
+
 }
+
+
 
 .stretch-mode.selected {
+
   border: 2px solid #5c9470;
+
   background: #edf8f0;
+
 }
+
+
 
 .summary-box {
+
   margin-bottom: 11px;
+
   padding: 12px;
+
   border: 1px solid #ddd5c9;
+
   border-radius: 9px;
+
   background: white;
+
 }
+
+
 
 .summary-row {
+
   display: grid;
+
   grid-template-columns: 90px 1fr;
+
   gap: 5px;
+
   margin: 5px 0;
+
   font-size: 11px;
+
 }
+
+
 
 .tag {
+
   display: inline-block;
+
   margin: 2px;
+
   padding: 4px 8px;
+
   border-radius: 15px;
+
   background: #e7f4ea;
+
   color: #477858;
+
   font-size: 10px;
+
 }
+
+
 
 .consent-box {
+
   height: 250px;
+
   overflow-y: auto;
+
   padding: 12px;
+
   border: 1px solid #d0c9be;
+
   border-radius: 8px;
+
   background: white;
+
   font-size: 11px;
+
   line-height: 1.7;
+
 }
+
+
 
 .consent-check {
+
   display: flex;
+
   gap: 8px;
+
   margin-top: 10px;
+
   padding: 11px;
+
   border: 1px solid #ddd5c9;
+
   border-radius: 8px;
+
   background: white;
+
   font-size: 11px;
+
 }
+
+
 
 .consent-check.disabled {
+
   opacity: .45;
+
 }
+
+
 
 .complete-icon {
+
   margin: 45px 0 20px;
+
   text-align: center;
+
   font-size: 48px;
+
 }
+
+
 
 .complete-title {
+
   color: #568566;
+
   text-align: center;
+
   font-size: 18px;
+
   font-weight: bold;
+
 }
+
+
 
 .complete-text {
+
   text-align: center;
+
   color: #777;
+
   font-size: 11px;
+
   line-height: 1.7;
+
 }
+
+
 
 .reservation-number {
+
   margin: 20px 0;
+
   padding: 15px;
+
   border: 1px solid #c3dfca;
+
   border-radius: 9px;
+
   background: #edf8f0;
+
   text-align: center;
+
 }
+
+
 
 .reservation-number strong {
+
   display: block;
+
   margin-top: 5px;
+
   color: #356748;
+
   font-size: 18px;
+
   letter-spacing: 2px;
+
 }
+
+
 
 .status-message {
+
   margin-top: 12px;
+
   text-align: center;
+
   color: #5c9470;
+
   font-size: 12px;
+
 }
+
+
 
 .lookup-card {
+
   margin-bottom: 12px;
+
   padding: 14px;
+
   border: 1px solid #ddd5c9;
+
   border-radius: 10px;
+
   background: white;
+
 }
+
+
 
 .lookup-number {
+
   color: #999;
+
   font-size: 10px;
+
 }
+
+
 
 .lookup-date {
+
   margin: 7px 0;
+
   color: #3d6f4d;
+
   font-size: 17px;
+
   font-weight: bold;
+
 }
+
+
 
 .lookup-line {
+
   margin: 4px 0;
+
   color: #666;
+
   font-size: 11px;
+
 }
+
+
 
 .cancel-btn {
+
   width: 100%;
+
   margin-top: 12px;
+
   padding: 12px;
+
   border: 1px solid #d98c8c;
+
   border-radius: 8px;
+
   background: white;
+
   color: #c65757;
+
   font-weight: bold;
+
 }
+
+
 
 .empty-message {
+
   margin: 55px 0 30px;
+
   color: #888;
+
   text-align: center;
+
   font-size: 12px;
+
   line-height: 1.8;
+
 }
 
+
+
 .loading {
+
   padding: 25px;
+
   color: #68816f;
+
   text-align: center;
+
   font-size: 12px;
+
 }
+
+
 
 /* 専用カレンダー */
 
+
+
 .calendar {
+
   width: 100%;
+
   margin-top: 8px;
+
   padding: 12px;
+
   border: 1px solid #d4cec3;
+
   border-radius: 10px;
+
   background: white;
+
 }
+
+
 
 .calendar-header {
+
   display: grid;
+
   grid-template-columns: 45px 1fr 45px;
+
   align-items: center;
+
   margin-bottom: 12px;
+
 }
+
+
 
 .calendar-title {
+
   text-align: center;
+
   color: #477858;
+
   font-size: 16px;
+
   font-weight: bold;
+
 }
+
+
 
 .calendar-nav {
+
   width: 42px;
+
   height: 42px;
+
   border: 1px solid #b6d0bd;
+
   border-radius: 8px;
+
   background: white;
+
   color: #4f805d;
+
   font-size: 25px;
+
 }
+
+
 
 .calendar-nav:disabled {
+
   color: #ccc;
+
   background: #f5f3ef;
+
   border-color: #ddd;
+
   cursor: not-allowed;
+
 }
+
+
 
 .calendar-week {
+
   display: grid;
+
   grid-template-columns: repeat(7, 1fr);
+
   margin-bottom: 5px;
+
   text-align: center;
+
   color: #777;
+
   font-size: 11px;
+
 }
+
+
 
 .calendar-week div {
+
   padding: 6px 0;
+
 }
+
+
 
 .calendar-week .sun {
+
   color: #c86161;
+
 }
+
+
 
 .calendar-week .sat {
+
   color: #557eb3;
+
 }
+
+
 
 .calendar-days {
+
   display: grid;
+
   grid-template-columns: repeat(7,1fr);
+
   gap: 4px;
+
 }
+
+
 
 .calendar-day {
+
   min-width: 0;
+
   height: 42px;
+
   padding: 0;
+
   border: none;
+
   border-radius: 8px;
+
   background: transparent;
+
   color: #333;
+
   font-size: 13px;
+
 }
+
+
 
 .calendar-day.today {
+
   border: 1px solid #5c9470;
+
 }
+
+
 
 .calendar-day.selected {
+
   background: #5c9470;
+
   color: white;
+
   font-weight: bold;
+
 }
+
+
 
 .calendar-day.disabled {
+
   color: #ccc;
+
   background: #f5f3ef;
+
   cursor: not-allowed;
+
 }
+
+
 
 .calendar-empty {
+
   height: 42px;
+
 }
 
+
+
 .selected-date-text {
+
   margin-top: 8px;
+
   padding: 9px;
+
   border-radius: 7px;
+
   background: #edf7ef;
+
   color: #477858;
+
   text-align: center;
+
   font-size: 12px;
+
 }
+
 </style>
+
 </head>
+
+
 
 <body>
 
+
+
 <div class="app">
+
+
 
 <!-- トップ -->
 
+
+
 <section id="homeScreen">
+
+
 
   <div class="content">
 
+
+
     <div class="logo">
+
       🌿 Re:af
+
     </div>
+
+
 
     <button class="home-card" onclick="showSchedule()">
 
+
+
       <div class="home-card-title">
+
         📅　新しいご予約
+
       </div>
+
+
 
       <div class="home-card-sub">
+
         空き状況を確認してご予約
+
       </div>
 
+
+
     </button>
+
+
 
     <button class="home-card" onclick="showLookup()">
 
+
+
       <div class="home-card-title">
+
         🔍　ご予約の確認・キャンセル
+
       </div>
 
+
+
       <div class="home-card-sub">
+
         すでにご予約済みの方はこちら
+
       </div>
+
+
 
     </button>
 
+
+
   </div>
 
+
+
 </section>
+
+
+
 
 
 <!-- 日時選択 -->
 
+
+
 <section id="scheduleScreen" class="hidden">
+
+
 
   <div class="header">
 
+
+
     <div class="header-title">
+
       🌿 Re:af｜空き状況
+
     </div>
 
+
+
     <div class="header-sub">
+
       コース・日付・担当者・時間をお選びください
+
     </div>
+
+
 
   </div>
 
+
+
   <div class="content">
+
+
 
     <div class="course-grid">
 
+
+
       <button
+
         class="course-time-btn"
+
         onclick="selectDuration(60,3000,this)">
 
+
+
         <strong>60分</strong>
+
         <span>¥3,000</span>
 
+
+
       </button>
 
+
+
       <button
+
         class="course-time-btn"
+
         onclick="selectDuration(90,4500,this)">
 
+
+
         <strong>90分</strong>
+
         <span>¥4,500</span>
 
+
+
       </button>
+
+
 
       <button
+
         class="course-time-btn"
+
         onclick="selectDuration(120,6000,this)">
 
+
+
         <strong>120分</strong>
+
         <span>¥6,000</span>
+
+
 
       </button>
 
+
+
     </div>
+
+
 
     <div class="info-box">
 
+
+
       🌿 コースを選択後、
+
       日付と担当者を選択してください。
 
+
+
     </div>
+
+
+
 
 
     <!-- 専用カレンダー -->
 
+
+
     <div class="field-block">
 
+
+
       <label class="field-label">
+
         ご希望日
+
       </label>
+
+
 
       <div class="calendar">
 
+
+
         <div class="calendar-header">
 
+
+
           <button
+
             id="calendarPrev"
+
             class="calendar-nav"
+
             type="button"
+
             onclick="changeCalendarMonth(-1)">
+
             ‹
+
           </button>
+
+
 
           <div
+
             id="calendarTitle"
+
             class="calendar-title">
+
           </div>
 
+
+
           <button
+
             id="calendarNext"
+
             class="calendar-nav"
+
             type="button"
+
             onclick="changeCalendarMonth(1)">
+
             ›
+
           </button>
 
+
+
         </div>
+
+
 
         <div class="calendar-week">
 
+
+
           <div class="sun">日</div>
+
           <div>月</div>
+
           <div>火</div>
+
           <div>水</div>
+
           <div>木</div>
+
           <div>金</div>
+
           <div class="sat">土</div>
 
+
+
         </div>
 
+
+
         <div
+
           id="calendarDays"
+
           class="calendar-days">
+
         </div>
+
+
 
       </div>
 
+
+
       <div
+
         id="selectedDateText"
+
         class="selected-date-text">
+
+
 
         日付を選択してください
 
+
+
       </div>
 
+
+
     </div>
+
+
+
 
 
     <div class="field-block">
 
+
+
       <label class="field-label">
+
         担当者
+
       </label>
 
-      <select
-        id="therapistSelect"
-        class="input"
-        onchange="updateSchedule()">
 
-        <option value="">
-          担当者を選択してください
-        </option>
 
-        <option value="指名なし">
-          指名なし
-        </option>
+      <select id="therapistSelect" class="input" onchange="updateSchedule()" disabled>
+          <option value="">担当者を読み込み中...</option>
+        </select>
+        <div id="therapistLoadStatus" class="status-message" role="status" aria-live="polite">セラピスト一覧を取得しています...</div>
+        <button id="therapistRetry" class="back-btn hidden" type="button" onclick="loadTherapists()">担当者一覧を再読み込み</button>
 
-        <option value="いけがや">
-          いけがや
-        </option>
 
-        <option value="鈴木">
-          鈴木
-        </option>
-
-        <option value="増井">
-          増井
-        </option>
-
-        <option value="カメムシ">
-          カメムシ
-        </option>
-
-      </select>
 
     </div>
+
+
+
 
 
     <div
+
       id="timeArea"
+
       class="hidden">
 
-      <div
-        id="timeTitle"
-        class="time-title">
-      </div>
+
 
       <div
-        id="timeGrid"
-        class="time-grid">
+
+        id="timeTitle"
+
+        class="time-title">
+
       </div>
+
+
+
+      <div
+
+        id="timeGrid"
+
+        class="time-grid">
+
+      </div>
+
+
 
     </div>
 
 
+
+
+
     <button
+
       class="back-btn"
+
       onclick="showHome()">
+
+
 
       ← トップに戻る
 
+
+
     </button>
+
+
 
   </div>
 
+
+
 </section>
+
+
+
 
 
 <!-- お客様情報 -->
 
+
+
 <section id="customerScreen" class="hidden">
+
+
 
   <div class="header">
 
+
+
     <div class="header-title">
+
       🌿 Re:af｜ご予約
+
     </div>
 
+
+
   </div>
+
+
 
   <div class="steps">
 
+
+
     <div class="step active">
+
       <div class="step-circle">1</div>
+
       お客様情報
+
     </div>
 
+
+
     <div class="step">
+
       <div class="step-circle">2</div>
+
       コース選択
+
     </div>
 
+
+
     <div class="step">
+
       <div class="step-circle">3</div>
+
       部位選択
+
     </div>
 
+
+
     <div class="step">
+
       <div class="step-circle">4</div>
+
       確認・送信
+
     </div>
+
+
 
   </div>
+
+
 
   <div class="content">
 
+
+
     <div class="section-title">
+
       📋 お客様情報
+
     </div>
+
+
 
     <div class="field-block">
 
+
+
       <label class="field-label">
+
+
 
         お名前
+
         <span class="required">※必須</span>
+
+
 
       </label>
 
+
+
       <input
+
         id="customerName"
+
         class="input"
+
         type="text"
+
         placeholder="例：山田 花子">
 
+
+
     </div>
+
+
 
     <div class="field-block">
 
+
+
       <label class="field-label">
+
+
 
         電話番号
+
         <span class="required">※必須</span>
+
+
 
       </label>
 
+
+
       <input
+
         id="customerPhone"
+
         class="input"
+
         type="tel"
+
         placeholder="例：090-0000-0000">
 
+
+
     </div>
 
+
+
     <div
+
       id="reservationCard"
+
       class="reservation-card">
+
     </div>
+
+
 
     <div class="field-block">
 
+
+
       <label class="field-label">
 
+
+
         初回・リピート
+
         <span class="required">※必須</span>
 
+
+
       </label>
+
+
 
       <div class="choice-two">
 
+
+
         <button
+
           class="choice-btn visit-btn"
+
           onclick="selectVisit('初回',this)">
+
+
 
           🌱 初回
 
+
+
         </button>
 
+
+
         <button
+
           class="choice-btn visit-btn"
+
           onclick="selectVisit('リピート',this)">
+
+
 
           🔁 リピート
 
+
+
         </button>
+
+
 
       </div>
 
+
+
     </div>
+
+
 
     <div class="field-block">
 
+
+
       <label class="field-label">
+
         メモ・症状（任意）
+
       </label>
 
+
+
       <textarea
+
         id="customerNote"
+
         class="input"
+
         placeholder="気になる症状・要望などがあればご記入ください"></textarea>
+
+
 
     </div>
 
+
+
     <button
+
       class="primary-btn"
+
       onclick="goService()">
+
+
 
       次へ：コース選択 →
 
+
+
     </button>
 
+
+
     <button
+
       class="back-btn"
+
       onclick="showSchedule()">
+
+
 
       ← 空き状況に戻る
 
+
+
     </button>
+
+
 
   </div>
 
+
+
 </section>
+
+
+
 
 
 <!-- コース選択 -->
 
+
+
 <section id="serviceScreen" class="hidden">
+
+
 
   <div class="header">
 
+
+
     <div class="header-title">
+
       🌿 Re:af｜ご予約
+
     </div>
 
+
+
   </div>
+
+
 
   <div class="steps">
 
+
+
     <div class="step">
+
       <div class="step-circle">1</div>
+
       お客様情報
+
     </div>
+
+
 
     <div class="step active">
+
       <div class="step-circle">2</div>
+
       コース選択
+
     </div>
 
+
+
     <div class="step">
+
       <div class="step-circle">3</div>
+
       部位選択
+
     </div>
 
+
+
     <div class="step">
+
       <div class="step-circle">4</div>
+
       確認・送信
+
     </div>
+
+
 
   </div>
+
+
 
   <div class="content">
 
+
+
     <div class="section-title">
+
       💆 コース選択
+
     </div>
 
+
+
     <button
+
       class="service-btn"
+
       onclick="selectService('揉みほぐしのみ',this)">
 
+
+
       🤲
+
       <strong>揉みほぐしのみ</strong>
 
+
+
       <span>
+
         気になる部位をほぐします
+
       </span>
+
+
 
     </button>
 
+
+
     <button
+
       class="service-btn"
+
       onclick="selectService('ストレッチのみ',this)">
 
+
+
       🧘
+
       <strong>ストレッチのみ</strong>
 
+
+
       <span>
+
         身体の柔軟性を高めます
+
       </span>
 
+
+
     </button>
 
+
+
     <button
+
       class="service-btn"
+
       onclick="selectService('両方',this)">
 
+
+
       ✨
+
       <strong>
+
         両方（揉みほぐし＋ストレッチ）
+
       </strong>
+
+
 
     </button>
 
+
+
     <button
+
       class="back-btn"
+
       onclick="showCustomer()">
+
+
 
       ← お客様情報に戻る
 
+
+
     </button>
+
+
 
   </div>
 
+
+
 </section>
+
+
+
 
 
 <!-- 部位選択 -->
 
+
+
 <section id="partsScreen" class="hidden">
+
+
 
   <div class="header">
 
+
+
     <div class="header-title">
+
       🌿 Re:af｜ご予約
+
     </div>
 
+
+
   </div>
+
+
 
   <div class="steps">
 
-    <div class="step">
-      <div class="step-circle">1</div>
-      お客様情報
-    </div>
+
 
     <div class="step">
-      <div class="step-circle">2</div>
-      コース選択
+
+      <div class="step-circle">1</div>
+
+      お客様情報
+
     </div>
+
+
+
+    <div class="step">
+
+      <div class="step-circle">2</div>
+
+      コース選択
+
+    </div>
+
+
 
     <div class="step active">
+
       <div class="step-circle">3</div>
+
       部位選択
+
     </div>
+
+
 
     <div class="step">
+
       <div class="step-circle">4</div>
+
       確認・送信
+
     </div>
 
+
+
   </div>
+
+
 
   <div class="content">
 
+
+
     <div
+
       id="partsTitle"
+
       class="section-title">
+
     </div>
 
+
+
     <div
+
       id="partsInfo"
+
       class="info-box">
+
     </div>
 
+
+
     <div
+
       id="stretchModeArea"
+
       class="hidden">
+
+
 
       <div class="stretch-mode-grid">
 
+
+
         <button
+
           class="stretch-mode"
+
           onclick="selectStretchMode('おまかせ',this)">
 
+
+
           🙌<br>
+
           おまかせ
 
+
+
         </button>
+
+
 
         <button
+
           class="stretch-mode"
+
           onclick="selectStretchMode('部位選択',this)">
 
+
+
           📍<br>
+
           部位選択
+
+
 
         </button>
 
+
+
       </div>
+
+
 
     </div>
 
+
+
     <div
+
       id="massagePartsArea"
+
       class="hidden">
 
+
+
       <div
+
         id="massagePartsGrid"
+
         class="parts-grid">
+
       </div>
 
+
+
     </div>
+
+
 
     <div
+
       id="stretchPartsArea"
+
       class="hidden">
 
+
+
       <div
+
         id="stretchPartsGrid"
+
         class="parts-grid">
+
       </div>
 
+
+
     </div>
+
+
 
     <button
+
       class="primary-btn"
+
       onclick="goConfirm()">
+
+
 
       次へ：確認・送信 →
 
+
+
     </button>
 
+
+
     <button
+
       class="back-btn"
+
       onclick="showService()">
+
+
 
       ← コース選択に戻る
 
+
+
     </button>
+
+
 
   </div>
 
+
+
 </section>
+
+
+
 
 
 <!-- 確認 -->
 
+
+
 <section id="confirmScreen" class="hidden">
+
+
 
   <div class="header">
 
+
+
     <div class="header-title">
+
       🌿 Re:af｜ご予約
+
     </div>
 
+
+
   </div>
+
+
 
   <div class="steps">
 
+
+
     <div class="step">
+
       <div class="step-circle">1</div>
+
       お客様情報
+
     </div>
 
+
+
     <div class="step">
+
       <div class="step-circle">2</div>
+
       コース選択
+
     </div>
 
+
+
     <div class="step">
+
       <div class="step-circle">3</div>
+
       部位選択
+
     </div>
+
+
 
     <div class="step active">
+
       <div class="step-circle">4</div>
+
       確認・送信
+
     </div>
 
+
+
   </div>
+
+
 
   <div class="content">
 
+
+
     <div class="section-title">
+
       ✅ 確認・送信
+
     </div>
 
+
+
     <div
+
       id="customerSummary"
+
       class="summary-box">
+
     </div>
 
+
+
     <div
+
       id="courseSummary"
+
       class="summary-box">
+
     </div>
+
+
 
     <div class="section-title">
+
       📄 施術同意書・確認書
+
     </div>
 
+
+
     <div
+
       id="consentBox"
+
       class="consent-box"
+
       onscroll="checkConsentScroll()">
 
+
+
       <strong>
+
         リーフ 〜Re:af〜 施術同意書・確認書
+
       </strong>
 
+
+
       <p>
+
         当サロンでは、お客様に安全かつ快適に施術を受けていただくため、
+
         事前に以下の内容をご確認・ご理解いただき、ご承諾をお願いしております。
+
       </p>
+
+
 
       <h4>1. 施術内容および目的の確認</h4>
 
-      <p>
-        ・当サロンの施術（揉みほぐし・ストレッチ等）は、
-        心身のリフレッシュおよびコンディショニングを目的としたものであり、
-        医療行為（診断・治療等）ではありません。
-      </p>
+
 
       <p>
-        ・施術後、血行促進や身体の変化に伴い、
-        一時的な揉み返し・だるさ・軽度の違和感などが生じる場合があります。
+
+        ・当サロンの施術（揉みほぐし・ストレッチ等）は、
+
+        心身のリフレッシュおよびコンディショニングを目的としたものであり、
+
+        医療行為（診断・治療等）ではありません。
+
       </p>
+
+
+
+      <p>
+
+        ・施術後、血行促進や身体の変化に伴い、
+
+        一時的な揉み返し・だるさ・軽度の違和感などが生じる場合があります。
+
+      </p>
+
+
 
       <h4>2. 施術を受けられない状態</h4>
 
+
+
       <p>
+
         ・発熱、強度の体調不良、感染症の疑い、飲酒後
+
       </p>
 
+
+
       <p>
+
         ・骨折、捻挫、打撲、ぎっくり腰などの急性の怪我、
+
         強い炎症や腫れ
+
       </p>
 
+
+
       <p>
+
         ・医師から運動・ストレッチ・強い刺激等を禁止されている場合、
+
         手術直後
+
       </p>
 
+
+
       <p>
+
         ・妊娠中またはその可能性がある場合
+
       </p>
+
+
 
       <h4>3. お身体の状態・既往歴の申告</h4>
 
-      <p>
-        ・現在治療中の病気、過去の大病・手術歴、
-        服薬状況、ケガ・痛み・しびれ等がある場合は、
-        必ず事前に施術者へお申し出ください。
-      </p>
+
 
       <p>
-        【重要】施術中に痛み・しびれ・気分不良・刺激の強弱など、
-        異常や不快感を感じた場合は、
-        直ちに施術者へお申し出ください。
+
+        ・現在治療中の病気、過去の大病・手術歴、
+
+        服薬状況、ケガ・痛み・しびれ等がある場合は、
+
+        必ず事前に施術者へお申し出ください。
+
       </p>
+
+
+
+      <p>
+
+        【重要】施術中に痛み・しびれ・気分不良・刺激の強弱など、
+
+        異常や不快感を感じた場合は、
+
+        直ちに施術者へお申し出ください。
+
+      </p>
+
+
 
       <h4>4. 免責事項・個人情報の取り扱い</h4>
 
+
+
       <p>
+
         ・ご自身の申告漏れや虚偽の申告があった場合、
+
         または施術後の不適切な行動による体調不良等について、
+
         当サロンは一切の責任を負いかねます。
+
       </p>
 
+
+
       <p>
+
         ・お荷物や貴重品の管理はご自身でお願いいたします。
+
       </p>
 
+
+
       <p>
+
         ・ご記入いただいた個人情報は、
+
         当サロンの施術管理および連絡以外の目的には使用いたしません。
+
       </p>
+
+
 
       <h4>【同意欄】</h4>
 
+
+
       <p>
+
         私は上記の説明・確認事項を十分に読み、
+
         内容を正しく理解した上で、
+
         自身の意思により「リーフ 〜Re:af〜」の施術を受けることに同意します。
+
       </p>
+
+
 
     </div>
 
+
+
     <div
+
       id="consentHint"
+
       class="info-box">
+
+
 
       🌿 最後までスクロールしてください。
 
+
+
     </div>
 
+
+
     <label
+
       id="check1Label"
+
       class="consent-check disabled">
 
+
+
       <input
+
         id="check1"
+
         type="checkbox"
+
         disabled
+
         onchange="updateReserveButton()">
 
+
+
       現在の身体状態について、
+
       正確に申告しました。
+
+
 
     </label>
 
+
+
     <label
+
       id="check2Label"
+
       class="consent-check disabled">
 
+
+
       <input
+
         id="check2"
+
         type="checkbox"
+
         disabled
+
         onchange="updateReserveButton()">
+
+
 
       異常を感じた場合はすぐに申し出ることを確認しました。
 
+
+
     </label>
+
+
 
     <label
+
       id="check3Label"
+
       class="consent-check disabled">
 
+
+
       <input
+
         id="check3"
+
         type="checkbox"
+
         disabled
+
         onchange="updateReserveButton()">
 
+
+
       施術同意書・確認書の内容を読み、
+
       同意します。
+
+
 
     </label>
 
+
+
     <button
+
       id="reserveButton"
+
       class="primary-btn"
+
       disabled
+
       onclick="submitReservation()">
+
+
 
       📨 この内容で予約する
 
+
+
     </button>
 
+
+
     <button
+
       class="back-btn"
+
       onclick="showParts()">
+
+
 
       ← 部位選択に戻る
 
+
+
     </button>
 
+
+
     <div
+
       id="sendingMessage"
+
       class="status-message hidden">
+
+
 
       予約データを送信しています…
 
+
+
     </div>
+
+
 
   </div>
 
+
+
 </section>
+
+
+
 
 
 <!-- 完了 -->
 
+
+
 <section id="completeScreen" class="hidden">
+
+
 
   <div class="header">
 
+
+
     <div class="header-title">
+
       🌿 Re:af｜ご予約
+
     </div>
 
+
+
   </div>
+
+
 
   <div class="content">
 
+
+
     <div class="complete-icon">
+
       🌿
+
     </div>
 
+
+
     <div class="complete-title">
+
       ご予約を受け付けました
+
     </div>
+
+
 
     <div class="complete-text">
 
+
+
       ご予約ありがとうございます。<br>
+
       承認のご連絡をさせていただきますので、<br>
+
       しばらくお待ちください。
 
+
+
     </div>
+
+
 
     <div class="reservation-number">
 
+
+
       予約番号
 
+
+
       <strong
+
         id="completeReservationNumber">
+
       </strong>
 
+
+
     </div>
+
+
 
     <div
+
       id="completeSummary"
+
       class="summary-box">
+
     </div>
 
+
+
     <button
+
       class="back-btn"
+
       onclick="showHome()">
+
+
 
       ← トップへ戻る
 
+
+
     </button>
+
+
 
   </div>
 
+
+
 </section>
+
+
+
 
 
 <!-- 予約確認 -->
 
+
+
 <section id="lookupScreen" class="hidden">
+
+
 
   <div class="header">
 
+
+
     <div class="header-title">
+
       🌿 Re:af｜ご予約の確認
+
     </div>
 
+
+
     <div class="header-sub">
+
       電話番号でご予約をご確認いただけます
+
     </div>
+
+
 
   </div>
 
+
+
   <div class="content">
+
+
 
     <div class="info-box">
 
+
+
       🌿 ご予約時に入力した電話番号を入力すると、
+
       今後のご予約内容を確認できます。<br>
+
       キャンセルもこちらから行えます。
 
+
+
     </div>
+
+
 
     <div class="field-block">
 
+
+
       <label class="field-label">
 
+
+
         電話番号
+
         <span class="required">※必須</span>
+
+
 
       </label>
 
+
+
       <input
+
         id="lookupPhone"
+
         class="input"
+
         type="tel"
+
         placeholder="例：090-0000-0000">
+
+
 
     </div>
 
+
+
     <button
+
       id="lookupButton"
+
       class="primary-btn"
+
       onclick="lookupReservations()">
+
+
 
       予約内容を確認する
 
+
+
     </button>
 
+
+
     <div
+
       id="lookupLoading"
+
       class="loading hidden">
+
+
 
       予約を確認しています…
 
+
+
     </div>
 
+
+
     <button
+
       class="back-btn"
+
       onclick="showHome()">
+
+
 
       ← トップへ戻る
 
+
+
     </button>
 
+
+
   </div>
+
+
 
 </section>
 
 
+
+
+
 <section
+
   id="lookupResultsScreen"
+
   class="hidden">
+
+
 
   <div class="header">
 
+
+
     <div class="header-title">
+
       🌿 Re:af｜ご予約の確認
+
     </div>
+
+
 
   </div>
 
+
+
   <div class="content">
 
+
+
     <div
+
       id="lookupCount"
+
       class="section-title">
+
     </div>
+
+
 
     <div id="lookupResults"></div>
 
+
+
     <button
+
       class="back-btn"
+
       onclick="showLookup()">
+
+
 
       ← 別の電話番号で確認する
 
+
+
     </button>
+
+
 
   </div>
 
+
+
 </section>
+
+
+
 
 
 <section
+
   id="notFoundScreen"
+
   class="hidden">
+
+
 
   <div class="header">
 
+
+
     <div class="header-title">
+
       🌿 Re:af｜ご予約の確認
+
     </div>
 
+
+
   </div>
+
+
 
   <div class="content">
 
+
+
     <div class="section-title">
+
       ご予約内容
+
     </div>
+
+
 
     <div class="empty-message">
 
+
+
       この電話番号でのご予約は見つかりませんでした。<br>
+
       入力内容をご確認ください。
+
+
 
     </div>
 
+
+
     <button
+
       class="back-btn"
+
       onclick="showLookup()">
+
+
 
       ← 別の電話番号で確認する
 
+
+
     </button>
+
+
 
   </div>
 
+
+
 </section>
+
+
 
 </div>
 
 
+
+
+
 <script>
 
+
+
 const GAS_URL =
+
 "https://script.google.com/macros/s/AKfycbz1oThpfIVWE3tBu9iIl_KzkRdEuQaSpd7bUIpnVXvj9iiYtV0HoGEjsuEOGlKm3Hna/exec";
 
 
+
+
+
 let selectedMinutes = null;
+
 let selectedPrice = null;
+
 let selectedDate = null;
+
 let selectedTime = null;
+
 let selectedTherapist = null;
+
 let selectedVisit = null;
+
 let selectedService = null;
+
 let selectedStretchMode = null;
+
+
+
 
 
 /* カレンダー */
 
+
+
 let calendarMonth = null;
+
+
 
 const todayDate = new Date();
 
+
+
 todayDate.setHours(
+
   0,
+
   0,
+
   0,
+
   0
+
 );
+
+
 
 const calendarMaxDate =
+
   new Date(todayDate);
 
+
+
 calendarMaxDate.setDate(
+
   calendarMaxDate.getDate() + 60
+
 );
+
+
+
 
 
 const massageParts = [
+
   "頭",
+
   "首",
+
   "鎖骨周り",
+
   "肩",
+
   "腕",
+
   "手",
+
   "背中",
+
   "肩甲骨",
+
   "腰",
+
   "臀部",
+
   "裏もも",
+
   "ふくらはぎ",
+
   "前もも",
+
   "スネ",
+
   "足"
+
 ];
+
+
+
 
 
 const stretchParts = [
+
   "首",
+
   "上半身（前側）",
+
   "下半身（前側）",
+
   "上半身（後側）",
+
   "下半身（後側）"
+
 ];
+
+
+
 
 
 function hideAll() {
 
+
+
   document
+
     .querySelectorAll("section")
+
     .forEach(section => {
+
+
 
       section.classList.add("hidden");
 
+
+
     });
 
+
+
 }
+
+
+
 
 
 function showHome() {
 
+
+
   hideAll();
 
+
+
   document
+
     .getElementById("homeScreen")
+
     .classList.remove("hidden");
+
+
 
 }
 
+
+
+
+
+// GoogleスプレッドシートでONの担当者だけを表示します。
+// ページを開くたびに最新の情報を取得します。
+let therapistRequestNumber = 0;
+let activeTherapistNames = [];
+
+function loadTherapists() {
+  const select = document.getElementById("therapistSelect");
+  const status = document.getElementById("therapistLoadStatus");
+  const retry = document.getElementById("therapistRetry");
+  const previous = select.value;
+  const requestNumber = ++therapistRequestNumber;
+  const callbackName = "reafTherapists_" + requestNumber + "_" + Date.now();
+
+  select.disabled = true;
+  select.replaceChildren(new Option("担当者を読み込み中...", ""));
+  status.textContent = "セラピスト一覧を取得しています...";
+  retry.classList.add("hidden");
+  document.getElementById("timeArea").classList.add("hidden");
+  selectedTherapist = null;
+  selectedTime = null;
+
+  const script = document.createElement("script");
+  let finished = false;
+  const timer = setTimeout(() => finish(null), 12000);
+
+  function finish(data) {
+    if (finished) return;
+    finished = true;
+    clearTimeout(timer);
+    delete window[callbackName];
+    script.remove();
+    if (requestNumber !== therapistRequestNumber) return;
+
+    const valid = data && data.result === "success" && Array.isArray(data.therapists);
+    if (!valid) {
+      activeTherapistNames = [];
+      select.replaceChildren(new Option("担当者の取得に失敗しました", ""));
+      status.textContent = "担当者一覧を取得できませんでした。再読み込みしてください。";
+      retry.classList.remove("hidden");
+      return;
+    }
+
+    activeTherapistNames = [...new Set(data.therapists
+      .filter(item => item && typeof item.name === "string" && item.name.trim())
+      .map(item => item.name.trim()))];
+
+    select.replaceChildren(new Option("担当者を選択してください", ""));
+    select.add(new Option("指名なし", "指名なし"));
+    activeTherapistNames.forEach(name => select.add(new Option(name, name)));
+    select.disabled = false;
+    // まだ管理表にいる人だけ、以前の選択状態を復元します。
+    if (previous === "指名なし" || activeTherapistNames.includes(previous)) {
+      select.value = previous;
+    }
+    status.textContent = activeTherapistNames.length
+      ? "担当者一覧を更新しました。"
+      : "現在、指名できるセラピストはいません。";
+    updateSchedule();
+  }
+
+  window[callbackName] = finish;
+  script.onerror = () => finish(null);
+  script.src = GAS_URL + "?action=therapists&callback=" +
+    encodeURIComponent(callbackName) + "&_=" + Date.now();
+  document.head.appendChild(script);
+}
 
 function showSchedule() {
+  loadTherapists();
+
+
 
   hideAll();
 
+
+
   document
+
     .getElementById("scheduleScreen")
+
     .classList.remove("hidden");
 
+
+
 }
+
+
+
 
 
 function showCustomer() {
 
+
+
   hideAll();
 
+
+
   document
+
     .getElementById("customerScreen")
+
     .classList.remove("hidden");
 
+
+
 }
+
+
+
 
 
 function showService() {
 
+
+
   hideAll();
 
+
+
   document
+
     .getElementById("serviceScreen")
+
     .classList.remove("hidden");
 
+
+
 }
+
+
+
 
 
 function showParts() {
 
+
+
   hideAll();
 
+
+
   document
+
     .getElementById("partsScreen")
+
     .classList.remove("hidden");
 
+
+
 }
+
+
+
 
 
 function showLookup() {
 
+
+
   hideAll();
 
+
+
   document
+
     .getElementById("lookupScreen")
+
     .classList.remove("hidden");
 
+
+
 }
+
+
+
 
 
 function selectDuration(minutes, price, button) {
 
+
+
   selectedMinutes = minutes;
+
   selectedPrice = price;
 
+
+
   document
+
     .querySelectorAll(".course-time-btn")
+
     .forEach(btn => {
+
+
 
       btn.classList.remove("selected");
 
+
+
     });
+
+
 
   button.classList.add("selected");
 
+
+
   updateSchedule();
 
+
+
 }
+
+
+
 
 
 /* カレンダー */
 
+
+
 function initializeCalendar() {
 
+
+
   calendarMonth =
+
     new Date(
+
       todayDate.getFullYear(),
+
       todayDate.getMonth(),
+
       1
+
     );
+
+
 
   renderCalendar();
 
+
+
 }
+
+
+
 
 
 function renderCalendar() {
 
+
+
   const year =
+
     calendarMonth.getFullYear();
 
+
+
   const month =
+
     calendarMonth.getMonth();
 
 
+
+
+
   document
+
     .getElementById("calendarTitle")
+
     .textContent =
+
     `${year}年 ${month + 1}月`;
 
 
+
+
+
   const area =
+
     document.getElementById(
+
       "calendarDays"
+
     );
+
+
 
   area.innerHTML = "";
 
 
+
+
+
   const firstDay =
+
     new Date(
+
       year,
+
       month,
+
       1
+
     );
+
+
+
 
 
   const lastDay =
+
     new Date(
+
       year,
+
       month + 1,
+
       0
+
     );
 
 
+
+
+
   const startWeekday =
+
     firstDay.getDay();
 
 
+
+
+
   for (
+
     let i = 0;
+
     i < startWeekday;
+
     i++
+
   ) {
 
+
+
     const empty =
+
       document.createElement("div");
 
+
+
     empty.className =
+
       "calendar-empty";
 
+
+
     area.appendChild(empty);
+
+
 
   }
 
 
+
+
+
   for (
+
     let day = 1;
+
     day <= lastDay.getDate();
+
     day++
+
   ) {
 
+
+
     const date =
+
       new Date(
+
         year,
+
         month,
+
         day
+
       );
+
+
+
 
 
     date.setHours(
+
       0,
+
       0,
+
       0,
+
       0
+
     );
 
 
+
+
+
     const button =
+
       document.createElement("button");
 
+
+
     button.type =
+
       "button";
 
+
+
     button.className =
+
       "calendar-day";
 
+
+
     button.textContent =
+
       day;
 
 
+
+
+
     const past =
+
       date < todayDate;
 
+
+
     const tooFuture =
+
       date > calendarMaxDate;
 
 
+
+
+
     if (
+
       past ||
+
       tooFuture
+
     ) {
+
+
 
       button.disabled =
+
         true;
 
+
+
       button.classList.add(
+
         "disabled"
+
       );
 
+
+
     }
+
+
+
 
 
     if (
+
       date.getTime() ===
+
       todayDate.getTime()
+
     ) {
 
+
+
       button.classList.add(
+
         "today"
+
       );
 
+
+
     }
+
+
+
 
 
     const value =
+
       formatDateInput(date);
 
 
+
+
+
     if (
+
       selectedDate === value
+
     ) {
 
+
+
       button.classList.add(
+
         "selected"
+
       );
 
+
+
     }
+
+
+
 
 
     if (!button.disabled) {
 
+
+
       button.onclick =
+
         function() {
 
+
+
           selectCalendarDate(
+
             date
+
           );
 
+
+
         };
+
+
 
     }
 
 
+
+
+
     area.appendChild(
+
       button
+
     );
 
+
+
   }
+
+
+
 
 
   updateCalendarButtons();
 
+
+
 }
+
+
+
 
 
 function selectCalendarDate(date) {
 
+
+
   selectedDate =
+
     formatDateInput(date);
 
 
+
+
+
   document
+
     .getElementById(
+
       "selectedDateText"
+
     )
+
     .textContent =
+
     displayDate(date) +
+
     " を選択中";
+
+
+
 
 
   renderCalendar();
 
+
+
   updateSchedule();
 
+
+
 }
+
+
+
 
 
 function changeCalendarMonth(amount) {
 
+
+
   const next =
+
     new Date(
+
       calendarMonth.getFullYear(),
+
       calendarMonth.getMonth() + amount,
+
       1
+
     );
+
+
+
 
 
   const min =
+
     new Date(
+
       todayDate.getFullYear(),
+
       todayDate.getMonth(),
+
       1
+
     );
+
+
+
 
 
   const max =
+
     new Date(
+
       calendarMaxDate.getFullYear(),
+
       calendarMaxDate.getMonth(),
+
       1
+
     );
 
 
+
+
+
   if (
+
     next < min ||
+
     next > max
+
   ) {
 
+
+
     return;
+
+
 
   }
 
 
+
+
+
   calendarMonth =
+
     next;
+
+
 
   renderCalendar();
 
+
+
 }
+
+
+
 
 
 function updateCalendarButtons() {
 
+
+
   const current =
+
     new Date(
+
       calendarMonth.getFullYear(),
+
       calendarMonth.getMonth(),
+
       1
+
     );
+
+
+
 
 
   const min =
+
     new Date(
+
       todayDate.getFullYear(),
+
       todayDate.getMonth(),
+
       1
+
     );
+
+
+
 
 
   const max =
+
     new Date(
+
       calendarMaxDate.getFullYear(),
+
       calendarMaxDate.getMonth(),
+
       1
+
     );
 
 
+
+
+
   document
+
     .getElementById(
+
       "calendarPrev"
+
     )
+
     .disabled =
+
     current.getTime() ===
+
     min.getTime();
 
 
+
+
+
   document
+
     .getElementById(
+
       "calendarNext"
+
     )
+
     .disabled =
+
     current.getTime() ===
+
     max.getTime();
 
+
+
 }
+
+
+
 
 
 function formatDateInput(date) {
 
+
+
   const year =
+
     date.getFullYear();
 
+
+
   const month =
+
     String(
+
       date.getMonth() + 1
+
     ).padStart(2,"0");
+
+
 
   const day =
+
     String(
+
       date.getDate()
+
     ).padStart(2,"0");
 
+
+
   return (
+
     year +
+
     "-" +
+
     month +
+
     "-" +
+
     day
+
   );
 
+
+
 }
+
+
+
 
 
 function updateSchedule() {
 
+
+
   const therapist =
+
     document
+
       .getElementById(
+
         "therapistSelect"
+
       )
+
       .value;
 
 
+
+
+
   if (
+
     !selectedMinutes ||
+
     !selectedDate ||
+
     !therapist
+
   ) {
 
+
+
     document
+
       .getElementById(
+
         "timeArea"
+
       )
+
       .classList
+
       .add("hidden");
 
+
+
     return;
+
+
 
   }
 
 
+
+
+
   selectedTherapist =
+
     therapist;
+
+
 
   createTimeSlots();
 
+
+
 }
+
+
+
 
 
 function createTimeSlots() {
 
+
+
   const date =
+
     new Date(
+
       selectedDate +
+
       "T00:00:00"
+
     );
 
 
+
+
+
   document
+
     .getElementById(
+
       "timeTitle"
+
     )
+
     .textContent =
+
     displayDate(date) +
+
     "｜" +
+
     selectedTherapist;
 
 
+
+
+
   const grid =
+
     document
+
       .getElementById(
+
         "timeGrid"
+
       );
+
+
 
   grid.innerHTML = "";
 
 
+
+
+
   const times = [];
 
+
+
   for (
+
     let hour = 10;
+
     hour <= 17;
+
     hour++
+
   ) {
 
-    times.push(
-      String(hour).padStart(2,"0") +
-      ":00"
-    );
+
 
     times.push(
+
       String(hour).padStart(2,"0") +
-      ":30"
+
+      ":00"
+
     );
+
+
+
+    times.push(
+
+      String(hour).padStart(2,"0") +
+
+      ":30"
+
+    );
+
+
 
   }
 
 
+
+
+
   times.forEach(
+
     (time,index) => {
 
+
+
       const button =
+
         document
+
           .createElement(
+
             "button"
+
           );
 
+
+
       button.className =
+
         "time-btn";
 
+
+
       button.textContent =
+
         time;
 
 
+
+
+
       const demoFull =
+
         [2,5,9]
+
         .includes(index);
+
+
+
 
 
       if (demoFull) {
 
+
+
         button.classList.add(
+
           "full"
+
         );
 
+
+
         button.disabled =
+
           true;
 
+
+
       }
+
+
 
       else {
 
+
+
         button.onclick =
+
           () => selectTime(time);
+
+
 
       }
 
 
+
+
+
       grid.appendChild(
+
         button
+
       );
 
+
+
     }
+
   );
 
 
+
+
+
   document
+
     .getElementById(
+
       "timeArea"
+
     )
+
     .classList
+
     .remove("hidden");
 
+
+
 }
+
+
+
 
 
 function selectTime(time) {
 
+
+
   selectedTime =
+
     time;
 
 
+
+
+
   const date =
+
     new Date(
+
       selectedDate +
+
       "T00:00:00"
+
     );
 
 
+
+
+
   document
+
     .getElementById(
+
       "reservationCard"
+
     )
+
     .innerHTML = `
 
+
+
       <div>
+
         ご予約日時
+
       </div>
+
+
 
       <div class="reservation-date">
 
+
+
         ${displayDate(date)}
+
         ${selectedTime}〜
 
+
+
       </div>
+
+
 
       <div class="reservation-detail">
 
+
+
         ${selectedMinutes}分コース　
+
+
 
         ¥${selectedPrice.toLocaleString()}
 
+
+
        　担当：${selectedTherapist}
+
+
 
       </div>
 
+
+
       <div
+
         class="change-link"
+
         onclick="showSchedule()">
+
+
 
         ← 日時を変更する
 
+
+
       </div>
 
+
+
     `;
+
+
+
 
 
   showCustomer();
 
+
+
 }
+
+
+
 
 
 function displayDate(date) {
 
+
+
   const week =
+
     [
+
       "日",
+
       "月",
+
       "火",
+
       "水",
+
       "木",
+
       "金",
+
       "土"
+
     ];
 
 
+
+
+
   return (
+
     `${date.getMonth()+1}月` +
+
     `${date.getDate()}日（` +
+
     `${week[date.getDay()]}）`
+
   );
 
+
+
 }
+
+
+
 
 
 function selectVisit(value,button) {
 
+
+
   selectedVisit =
+
     value;
 
 
+
+
+
   document
+
     .querySelectorAll(
+
       ".visit-btn"
+
     )
+
     .forEach(btn => {
 
+
+
       btn.classList.remove(
+
         "selected"
+
       );
+
+
 
     });
 
 
+
+
+
   button.classList.add(
+
     "selected"
+
   );
 
+
+
 }
+
+
+
 
 
 function goService() {
 
+
+
   const name =
+
     document
+
       .getElementById(
+
         "customerName"
+
       )
+
       .value
+
       .trim();
+
+
+
 
 
   const phone =
+
     document
+
       .getElementById(
+
         "customerPhone"
+
       )
+
       .value
+
       .trim();
+
+
+
 
 
   if (!name) {
 
+
+
     alert(
+
       "お名前を入力してください"
+
     );
+
+
 
     return;
 
+
+
   }
+
+
+
 
 
   if (!phone) {
 
+
+
     alert(
+
       "電話番号を入力してください"
+
     );
+
+
 
     return;
 
+
+
   }
+
+
+
 
 
   if (!selectedVisit) {
 
+
+
     alert(
+
       "初回またはリピートを選択してください"
+
     );
+
+
 
     return;
 
+
+
   }
+
+
+
 
 
   showService();
 
+
+
 }
+
+
+
 
 
 function selectService(value,button) {
 
+
+
   selectedService =
+
     value;
 
 
+
+
+
   document
+
     .querySelectorAll(
+
       ".service-btn"
+
     )
+
     .forEach(btn => {
 
+
+
       btn.classList.remove(
+
         "selected"
+
       );
+
+
 
     });
 
 
+
+
+
   button.classList.add(
+
     "selected"
+
   );
+
+
+
 
 
   prepareParts();
 
+
+
 }
+
+
+
 
 
 function prepareParts() {
 
+
+
   renderParts();
 
 
+
+
+
   document
+
     .getElementById(
+
       "massagePartsArea"
+
     )
+
     .classList
+
     .add("hidden");
 
 
+
+
+
   document
+
     .getElementById(
+
       "stretchPartsArea"
+
     )
+
     .classList
+
     .add("hidden");
+
+
+
 
 
   document
+
     .getElementById(
+
       "stretchModeArea"
+
     )
+
     .classList
+
     .add("hidden");
+
+
+
 
 
   selectedStretchMode =
+
     null;
 
 
+
+
+
   if (
+
     selectedService ===
+
     "揉みほぐしのみ"
+
   ) {
 
+
+
     document
+
       .getElementById(
+
         "partsTitle"
+
       )
+
       .textContent =
+
       "📍 揉みほぐし 部位選択";
 
 
+
+
+
     document
+
       .getElementById(
+
         "partsInfo"
+
       )
+
       .innerHTML =
+
       "🤲 揉みほぐしは基本的に全身を行います。<br>" +
+
       "特にお疲れの箇所をお選びください。";
 
 
+
+
+
     document
+
       .getElementById(
+
         "massagePartsArea"
+
       )
+
       .classList
+
       .remove("hidden");
 
+
+
   }
+
+
+
 
 
   else if (
+
     selectedService ===
+
     "ストレッチのみ"
+
   ) {
 
+
+
     document
+
       .getElementById(
+
         "partsTitle"
+
       )
+
       .textContent =
+
       "🧘 ストレッチ 部位選択";
 
 
+
+
+
     document
+
       .getElementById(
+
         "partsInfo"
+
       )
+
       .textContent =
+
       "ストレッチ方法をお選びください。";
 
 
+
+
+
     document
+
       .getElementById(
+
         "stretchModeArea"
+
       )
+
       .classList
+
       .remove("hidden");
 
+
+
   }
+
+
+
 
 
   else {
 
+
+
     document
+
       .getElementById(
+
         "partsTitle"
+
       )
+
       .textContent =
+
       "📍 部位選択";
 
 
+
+
+
     document
+
       .getElementById(
+
         "partsInfo"
+
       )
+
       .innerHTML =
+
       "✨ 揉みほぐし・ストレッチ共に基本的に全身を行います。<br>" +
+
       "特にお疲れの箇所をお選びください。";
 
 
+
+
+
     document
+
       .getElementById(
+
         "massagePartsArea"
+
       )
+
       .classList
+
       .remove("hidden");
+
+
+
 
 
     document
+
       .getElementById(
+
         "stretchPartsArea"
+
       )
+
       .classList
+
       .remove("hidden");
+
+
 
   }
+
+
+
 
 
   showParts();
 
+
+
 }
+
+
+
 
 
 function renderParts() {
 
+
+
   document
+
     .getElementById(
+
       "massagePartsGrid"
+
     )
+
     .innerHTML =
+
     massageParts.map(part => `
 
+
+
       <label class="part-item">
 
+
+
         <input
+
           type="checkbox"
+
           name="massagePart"
+
           value="${part}">
+
+
 
         ${part}
 
+
+
       </label>
 
+
+
     `).join("");
+
+
+
 
 
   document
+
     .getElementById(
+
       "stretchPartsGrid"
+
     )
+
     .innerHTML =
+
     stretchParts.map(part => `
+
+
 
       <label class="part-item">
 
+
+
         <input
+
           type="checkbox"
+
           name="stretchPart"
+
           value="${part}">
+
+
 
         ${part}
 
+
+
       </label>
+
+
 
     `).join("");
 
+
+
 }
+
+
+
 
 
 function selectStretchMode(mode,button) {
 
+
+
   selectedStretchMode =
+
     mode;
 
 
+
+
+
   document
+
     .querySelectorAll(
+
       ".stretch-mode"
+
     )
+
     .forEach(btn => {
 
+
+
       btn.classList.remove(
+
         "selected"
+
       );
+
+
 
     });
 
 
+
+
+
   button.classList.add(
+
     "selected"
+
   );
 
 
+
+
+
   if (
+
     mode ===
+
     "部位選択"
+
   ) {
 
+
+
     document
+
       .getElementById(
+
         "stretchPartsArea"
+
       )
+
       .classList
+
       .remove("hidden");
 
+
+
   }
+
+
 
   else {
 
+
+
     document
+
       .getElementById(
+
         "stretchPartsArea"
+
       )
+
       .classList
+
       .add("hidden");
+
+
 
   }
 
+
+
 }
+
+
+
 
 
 function getParts() {
 
+
+
   const massage =
+
     [
+
       ...document
+
         .querySelectorAll(
+
           'input[name="massagePart"]:checked'
+
         )
+
     ]
+
     .map(
+
       element =>
+
         element.value
+
     );
+
+
+
 
 
   const stretch =
+
     [
+
       ...document
+
         .querySelectorAll(
+
           'input[name="stretchPart"]:checked'
+
         )
+
     ]
+
     .map(
+
       element =>
+
         element.value
+
     );
 
 
+
+
+
   return {
+
     massage,
+
     stretch
+
   };
 
+
+
 }
+
+
+
 
 
 function goConfirm() {
 
+
+
   const parts =
+
     getParts();
 
 
+
+
+
   if (
+
     selectedService ===
+
     "揉みほぐしのみ" &&
+
     parts.massage.length === 0
+
   ) {
 
+
+
     alert(
+
       "部位を1つ以上選択してください"
+
     );
 
+
+
     return;
+
+
 
   }
 
 
+
+
+
   if (
+
     selectedService ===
+
     "ストレッチのみ"
+
   ) {
+
+
 
     if (!selectedStretchMode) {
 
+
+
       alert(
+
         "おまかせまたは部位選択を選択してください"
+
       );
+
+
 
       return;
 
+
+
     }
+
+
+
 
 
     if (
+
       selectedStretchMode ===
+
       "部位選択" &&
+
       parts.stretch.length === 0
+
     ) {
 
+
+
       alert(
+
         "部位を1つ以上選択してください"
+
       );
+
+
 
       return;
 
+
+
     }
 
+
+
   }
+
+
+
 
 
   if (
+
     selectedService ===
+
     "両方" &&
+
     parts.massage.length === 0 &&
+
     parts.stretch.length === 0
+
   ) {
 
+
+
     alert(
+
       "部位を1つ以上選択してください"
+
     );
+
+
 
     return;
 
+
+
   }
+
+
+
 
 
   buildConfirmation();
 
+
+
   resetConsent();
+
+
 
   hideAll();
 
 
+
+
+
   document
+
     .getElementById(
+
       "confirmScreen"
+
     )
+
     .classList
+
     .remove("hidden");
+
+
 
 }
 
 
+
+
+
 function buildConfirmation() {
 
+
+
   const name =
+
     document
+
       .getElementById(
+
         "customerName"
+
       )
+
       .value
+
       .trim();
+
+
+
 
 
   const phone =
+
     document
+
       .getElementById(
+
         "customerPhone"
+
       )
+
       .value
+
       .trim();
+
+
+
 
 
   const note =
+
     document
+
       .getElementById(
+
         "customerNote"
+
       )
+
       .value
+
       .trim();
 
 
+
+
+
   const date =
+
     new Date(
+
       selectedDate +
+
       "T00:00:00"
+
     );
 
 
+
+
+
   const parts =
+
     getParts();
 
 
+
+
+
   document
+
     .getElementById(
+
       "customerSummary"
+
     )
+
     .innerHTML = `
 
+
+
       <div class="summary-row">
+
         <span>お名前</span>
+
         <strong>${name}</strong>
+
       </div>
 
+
+
       <div class="summary-row">
+
         <span>電話番号</span>
+
         <strong>${phone}</strong>
+
       </div>
 
+
+
       <div class="summary-row">
+
         <span>日時</span>
+
         <strong>
+
           ${displayDate(date)}
+
           ${selectedTime}〜
+
         </strong>
+
       </div>
 
+
+
       <div class="summary-row">
+
         <span>時間</span>
+
         <strong>${selectedMinutes}分</strong>
+
       </div>
 
+
+
       <div class="summary-row">
+
         <span>担当</span>
+
         <strong>${selectedTherapist}</strong>
+
       </div>
 
+
+
       <div class="summary-row">
+
         <span>初回/リピート</span>
+
         <strong>${selectedVisit}</strong>
+
       </div>
 
+
+
       <div class="summary-row">
+
         <span>メモ</span>
+
         <strong>${note || "なし"}</strong>
+
       </div>
+
+
 
     `;
+
+
+
 
 
   let partsList = [];
 
 
+
+
+
   if (
+
     selectedService ===
+
     "揉みほぐしのみ"
+
   ) {
 
+
+
     partsList =
+
       parts.massage;
 
+
+
   }
+
+
+
 
 
   else if (
+
     selectedService ===
+
     "ストレッチのみ"
+
   ) {
 
+
+
     partsList =
+
       selectedStretchMode ===
+
       "おまかせ"
+
       ? ["おまかせ"]
+
       : parts.stretch;
 
+
+
   }
+
+
+
 
 
   else {
 
+
+
     partsList = [
+
       ...parts.massage,
+
       ...parts.stretch
+
     ];
+
+
 
   }
 
 
+
+
+
   document
+
     .getElementById(
+
       "courseSummary"
+
     )
+
     .innerHTML = `
+
+
 
       <div>
 
+
+
         コース：
 
+
+
         <strong>
+
           ${selectedService}
+
         </strong>
 
+
+
       </div>
+
+
 
       <div style="margin-top:10px;">
 
+
+
         ${
+
           partsList
+
             .map(
+
               item =>
+
                 `<span class="tag">${item}</span>`
+
             )
+
             .join("")
+
         }
+
+
 
       </div>
 
+
+
     `;
+
+
 
 }
 
 
+
+
+
 function resetConsent() {
 
+
+
   const box =
+
     document
+
       .getElementById(
+
         "consentBox"
+
       );
+
+
+
 
 
   box.scrollTop = 0;
 
 
+
+
+
   [
+
     "check1",
+
     "check2",
+
     "check3"
+
   ]
+
   .forEach(id => {
+
+
 
     const element =
+
       document
+
         .getElementById(id);
 
+
+
     element.checked =
+
       false;
 
+
+
     element.disabled =
+
       true;
 
+
+
   });
+
+
+
 
 
   [
+
     "check1Label",
+
     "check2Label",
+
     "check3Label"
+
   ]
+
   .forEach(id => {
 
+
+
     document
+
       .getElementById(id)
+
       .classList
+
       .add("disabled");
 
+
+
   });
+
+
+
 
 
   document
+
     .getElementById(
+
       "reserveButton"
+
     )
+
     .disabled =
+
     true;
 
 
+
+
+
   document
+
     .getElementById(
+
       "consentHint"
+
     )
+
     .classList
+
     .remove("hidden");
 
+
+
 }
+
+
+
 
 
 function checkConsentScroll() {
 
+
+
   const box =
+
     document
+
       .getElementById(
+
         "consentBox"
+
       );
 
 
+
+
+
   if (
+
     box.scrollTop +
+
     box.clientHeight <
+
     box.scrollHeight - 10
+
   ) {
 
+
+
     return;
+
+
 
   }
 
 
+
+
+
   [
+
     "check1",
+
     "check2",
+
     "check3"
+
   ]
+
   .forEach(id => {
 
+
+
     document
+
       .getElementById(id)
+
       .disabled =
+
       false;
 
+
+
   });
+
+
+
 
 
   [
+
     "check1Label",
+
     "check2Label",
+
     "check3Label"
+
   ]
+
   .forEach(id => {
 
+
+
     document
+
       .getElementById(id)
+
       .classList
+
       .remove("disabled");
 
+
+
   });
+
+
+
 
 
   document
+
     .getElementById(
+
       "consentHint"
+
     )
+
     .classList
+
     .add("hidden");
 
+
+
 }
+
+
+
 
 
 function updateReserveButton() {
 
+
+
   const ok =
+
     document
+
       .getElementById("check1")
+
       .checked
+
     &&
+
     document
+
       .getElementById("check2")
+
       .checked
+
     &&
+
     document
+
       .getElementById("check3")
+
       .checked;
 
 
+
+
+
   document
+
     .getElementById(
+
       "reserveButton"
+
     )
+
     .disabled =
+
     !ok;
 
+
+
 }
+
+
+
 
 
 async function submitReservation() {
 
+
+
   const button =
+
     document
+
       .getElementById(
+
         "reserveButton"
+
       );
+
+
+
 
 
   const sending =
+
     document
+
       .getElementById(
+
         "sendingMessage"
+
       );
 
 
+
+
+
   button.disabled =
+
     true;
 
 
+
+
+
   sending
+
     .classList
+
     .remove("hidden");
 
 
+
+
+
   const number =
+
     generateReservationNumber();
 
 
+
+
+
   const parts =
+
     getParts();
 
 
+
+
+
   let stretchData =
+
     parts
+
       .stretch
+
       .join("、");
 
 
+
+
+
   if (
+
     selectedService ===
+
     "ストレッチのみ" &&
+
     selectedStretchMode ===
+
     "おまかせ"
+
   ) {
 
+
+
     stretchData =
+
       "おまかせ";
 
+
+
   }
+
+
+
 
 
   const reservation = {
 
+
+
     action:
+
       "reserve",
 
+
+
     reservationNumber:
+
       number,
 
+
+
     name:
+
       document
+
         .getElementById(
+
           "customerName"
+
         )
+
         .value
+
         .trim(),
+
+
 
     phone:
+
       document
+
         .getElementById(
+
           "customerPhone"
+
         )
+
         .value
+
         .trim(),
 
+
+
     date:
+
       selectedDate,
 
+
+
     time:
+
       selectedTime,
 
+
+
     minutes:
+
       selectedMinutes,
 
+
+
     price:
+
       selectedPrice,
 
+
+
     therapist:
+
       selectedTherapist,
 
+
+
     visit:
+
       selectedVisit,
 
+
+
     service:
+
       selectedService,
 
+
+
     massageParts:
+
       parts
+
         .massage
+
         .join("、"),
 
+
+
     stretchParts:
+
       stretchData,
 
+
+
     note:
+
       document
+
         .getElementById(
+
           "customerNote"
+
         )
+
         .value
+
         .trim()
+
+
 
   };
 
 
+
+
+
   try {
 
+
+
     const formData =
+
       new URLSearchParams();
 
 
+
+
+
     Object.entries(
+
       reservation
+
     )
+
     .forEach(
+
       ([key,value]) => {
 
+
+
         formData.append(
+
           key,
+
           value ?? ""
+
         );
 
+
+
       }
+
     );
+
+
+
 
 
     await fetch(
+
       GAS_URL,
+
       {
+
         method:
+
           "POST",
 
+
+
         mode:
+
           "no-cors",
 
+
+
         body:
+
           formData
+
       }
+
     );
+
+
+
 
 
     showComplete(
+
       reservation
+
     );
 
+
+
   }
+
+
+
 
 
   catch (error) {
 
+
+
     console.error(error);
 
 
+
+
+
     alert(
+
       "予約データの送信に失敗しました。\nもう一度お試しください。"
+
     );
 
 
+
+
+
     button.disabled =
+
       false;
 
 
+
+
+
     sending
+
       .classList
+
       .add("hidden");
+
+
 
   }
 
+
+
 }
+
+
+
 
 
 function generateReservationNumber() {
 
+
+
   const now =
+
     new Date();
 
 
+
+
+
   const year =
+
     String(
+
       now.getFullYear()
+
     ).slice(-2);
 
 
+
+
+
   const month =
+
     String(
+
       now.getMonth()+1
+
     ).padStart(2,"0");
+
+
+
 
 
   const day =
+
     String(
+
       now.getDate()
+
     ).padStart(2,"0");
 
 
+
+
+
   const random =
+
     Math.floor(
+
       100000 +
+
       Math.random() *
+
       900000
+
     );
 
 
+
+
+
   return (
+
     `MR${year}${month}${day}${random}`
+
   );
 
+
+
 }
+
+
+
 
 
 function showComplete(reservation) {
 
+
+
   hideAll();
 
 
+
+
+
   document
+
     .getElementById(
+
       "completeScreen"
+
     )
+
     .classList
+
     .remove("hidden");
 
 
+
+
+
   document
+
     .getElementById(
+
       "completeReservationNumber"
+
     )
+
     .textContent =
+
     reservation
+
       .reservationNumber;
 
 
+
+
+
   const date =
+
     new Date(
+
       reservation.date +
+
       "T00:00:00"
+
     );
 
 
+
+
+
   document
+
     .getElementById(
+
       "completeSummary"
+
     )
+
     .innerHTML = `
 
+
+
       <div class="summary-row">
+
+
 
         <span>お名前</span>
 
+
+
         <strong>
+
           ${reservation.name}
+
         </strong>
+
+
 
       </div>
 
+
+
       <div class="summary-row">
+
+
 
         <span>ご予約日時</span>
 
+
+
         <strong>
+
           ${displayDate(date)}
+
           ${reservation.time}〜
+
         </strong>
+
+
 
       </div>
 
+
+
       <div class="summary-row">
+
+
 
         <span>コース</span>
 
+
+
         <strong>
+
           ${reservation.service}
+
           （${reservation.minutes}分）
+
         </strong>
 
+
+
       </div>
+
+
 
       <div class="summary-row">
 
+
+
         <span>担当</span>
 
+
+
         <strong>
+
           ${reservation.therapist}
+
         </strong>
+
+
 
       </div>
 
+
+
     `;
+
+
 
 }
 
 
+
+
+
 function lookupReservations() {
 
+
+
   const phone =
+
     document
+
       .getElementById(
+
         "lookupPhone"
+
       )
+
       .value
+
       .trim();
+
+
+
 
 
   if (!phone) {
 
+
+
     alert(
+
       "電話番号を入力してください"
+
     );
 
+
+
     return;
+
+
 
   }
 
 
+
+
+
   const button =
+
     document
+
       .getElementById(
+
         "lookupButton"
+
       );
+
+
+
 
 
   const loading =
+
     document
+
       .getElementById(
+
         "lookupLoading"
+
       );
 
 
+
+
+
   button.disabled =
+
     true;
 
 
+
+
+
   loading
+
     .classList
+
     .remove("hidden");
 
 
+
+
+
   const callbackName =
+
     "reafLookup_" +
+
     Date.now();
 
 
+
+
+
   window[
+
     callbackName
+
   ] =
+
     function(data) {
 
+
+
       delete window[
+
         callbackName
+
       ];
+
+
+
 
 
       script.remove();
 
 
+
+
+
       button.disabled =
+
         false;
 
 
+
+
+
       loading
+
         .classList
+
         .add("hidden");
 
 
+
+
+
       if (
+
         !data ||
+
         data.result !==
+
         "success"
+
       ) {
 
+
+
         alert(
+
           "予約の確認に失敗しました。"
+
         );
 
+
+
         return;
+
+
 
       }
 
 
+
+
+
       const reservations =
+
         data.reservations ||
+
         [];
 
 
+
+
+
       if (
+
         reservations.length ===
+
         0
+
       ) {
+
+
 
         hideAll();
 
 
+
+
+
         document
+
           .getElementById(
+
             "notFoundScreen"
+
           )
+
           .classList
+
           .remove("hidden");
+
+
+
 
 
         return;
 
+
+
       }
 
 
+
+
+
       renderLookupResults(
+
         reservations
+
       );
 
+
+
     };
+
+
+
 
 
   const script =
+
     document
+
       .createElement(
+
         "script"
+
       );
+
+
+
 
 
   script.src =
+
     GAS_URL +
+
     "?action=lookup" +
+
     "&phone=" +
+
     encodeURIComponent(phone) +
+
     "&callback=" +
+
     encodeURIComponent(
+
       callbackName
+
     );
 
 
+
+
+
   script.onerror =
+
     function() {
 
+
+
       button.disabled =
+
         false;
 
 
+
+
+
       loading
+
         .classList
+
         .add("hidden");
 
 
+
+
+
       alert(
+
         "予約情報を取得できませんでした。"
+
       );
+
+
 
     };
 
 
+
+
+
   document.body.appendChild(
+
     script
+
   );
+
+
 
 }
 
 
+
+
+
 function renderLookupResults(
+
   reservations
+
 ) {
+
+
 
   hideAll();
 
 
+
+
+
   document
+
     .getElementById(
+
       "lookupResultsScreen"
+
     )
+
     .classList
+
     .remove("hidden");
 
 
+
+
+
   document
+
     .getElementById(
+
       "lookupCount"
+
     )
+
     .textContent =
+
     `今後のご予約（${reservations.length}件）`;
 
 
+
+
+
   const area =
+
     document
+
       .getElementById(
+
         "lookupResults"
+
       );
 
 
+
+
+
   area.innerHTML =
+
     "";
 
 
+
+
+
   reservations.forEach(
+
     reservation => {
 
+
+
       const date =
+
         reservation.date
+
         ? new Date(
+
             reservation.date +
+
             "T00:00:00"
+
           )
+
         : null;
 
 
+
+
+
       const card =
+
         document
+
           .createElement(
+
             "div"
+
           );
 
 
+
+
+
       card.className =
+
         "lookup-card";
+
+
+
 
 
       card.innerHTML = `
 
+
+
         <div class="lookup-number">
 
+
+
           予約番号：
+
           ${reservation.reservationNumber}
 
+
+
         </div>
+
+
+
 
 
         <div class="lookup-date">
 
+
+
           ${
+
             date
+
             ? displayDate(date)
+
             : reservation.date
+
           }
+
+
 
           ${reservation.time}〜
 
+
+
         </div>
 
 
+
+
+
         <div class="lookup-line">
+
+
 
           コース　
 
+
+
           ${reservation.service}
+
+
 
           （${reservation.minutes}分）
 
+
+
         </div>
 
 
+
+
+
         <div class="lookup-line">
+
+
 
           担当　
 
+
+
           ${reservation.therapist}
 
+
+
         </div>
+
+
+
 
 
         <div class="lookup-line">
 
+
+
           料金　
 
+
+
           ¥${Number(
+
             reservation.price ||
+
             0
+
           ).toLocaleString()}
+
+
 
         </div>
 
 
+
+
+
         <button
+
           class="cancel-btn"
+
           onclick="cancelReservation('${reservation.reservationNumber}')">
+
+
 
           この予約をキャンセルする
 
+
+
         </button>
+
+
 
       `;
 
 
+
+
+
       area.appendChild(
+
         card
+
       );
 
+
+
     }
+
   );
+
+
 
 }
 
 
+
+
+
 async function cancelReservation(
+
   reservationNumber
+
 ) {
 
+
+
   const ok =
+
     confirm(
+
       "この予約をキャンセルします。\nよろしいですか？"
+
     );
 
 
+
+
+
   if (!ok) {
+
     return;
+
   }
+
+
+
 
 
   try {
 
+
+
     const formData =
+
       new URLSearchParams();
 
 
+
+
+
     formData.append(
+
       "action",
+
       "cancel"
+
     );
+
+
+
 
 
     formData.append(
+
       "reservationNumber",
+
       reservationNumber
+
     );
+
+
+
 
 
     await fetch(
+
       GAS_URL,
+
       {
+
         method:
+
           "POST",
 
+
+
         mode:
+
           "no-cors",
 
+
+
         body:
+
           formData
+
       }
+
     );
+
+
+
 
 
     alert(
+
       "予約をキャンセルしました。"
+
     );
+
+
+
 
 
     lookupReservations();
 
+
+
   }
+
+
+
 
 
   catch (error) {
 
+
+
     console.error(
+
       error
+
     );
+
+
+
 
 
     alert(
+
       "キャンセル処理に失敗しました。"
+
     );
 
+
+
   }
+
+
 
 }
 
 
+
+
+
 initializeCalendar();
+
+
 
 </script>
 
+
+
 </body>
+
 </html>
